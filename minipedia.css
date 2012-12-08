@@ -11,4 +11,4 @@ body, h2 {
 
 /* debug */
 #debug { clear:both; border: 1px solid red; }
-table { background:gold; }
+table { background:gold !important; }
