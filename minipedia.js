@@ -10,7 +10,7 @@ function onFormSubmit(){
 		},
 		dataType: 'jsonp',
 		success: function(jsonObject) {
-			var pageid = jsonObject.query.pageids[0];console.log(pageid);
+			var pageid = jsonObject.query.pageids[0];
 			var article = jsonObject.query.pages[pageid];
 			article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
 			article.link = "<a href='" + article.url + "'>" + article.title + "</a>";
