@@ -1,0 +1,10 @@
+body, h2 {
+	text-align:center;
+}
+
+#content {
+	margin: 2em auto;
+	width: 80%;
+	padding: 1em;
+	text-align: left;
+}
