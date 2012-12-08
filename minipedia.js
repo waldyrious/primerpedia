@@ -18,11 +18,18 @@ function onFormSubmit(){
 		},
 		dataType: 'jsonp',
 		success: function(jsonObject) {
-			article = jsonObject.query.pages.firstChild;
-			url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
-			link = "<a href='" + url + "'>" + article.title + "</a>";
-			$("#content").html("<h2>" + link + "</h2>");
-			$("#content").append( article.revisions[0].firstChild );
+			var article = jsonObject.query.pages.firstChild;
+			article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
+			article.link = "<a href='" + article.url + "'>" + article.title + "</a>";
+			article.text = cleanup( article.revisions[0].firstChild );
+			$("#content").html("<h2>" + article.link + "</h2>");
+			$("#content").append( article.text );
 		}
 	});
+}
+
+function cleanup( txt ){
+	tmp = $(txt).find("table").remove().end();
+	$("#debug").html(tmp);
+	return txt;
 }

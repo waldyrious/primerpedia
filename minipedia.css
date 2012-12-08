@@ -8,3 +8,5 @@ body, h2 {
 	padding: 1em;
 	text-align: left;
 }
+
+#debug { clear:both; border: 1px solid red; }
