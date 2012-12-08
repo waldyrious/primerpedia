@@ -8,7 +8,3 @@ body, h2 {
 	padding: 1em;
 	text-align: left;
 }
-
-/* debug */
-#debug { clear:both; border: 1px solid red; }
-table { background:gold !important; }
