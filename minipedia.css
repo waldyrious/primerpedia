@@ -3,7 +3,7 @@ body, h2 {
 }
 
 #content {
-	margin: 2em auto;
+	margin: 0 auto;
 	width: 80%;
 	padding: 1em;
 	text-align: left;
