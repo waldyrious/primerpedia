@@ -16,7 +16,8 @@ function onFormSubmit(){
 			var article = jsonObject.query.pages[pageid];
 			article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
 			article.link = "<a href='" + article.url + "'>" + article.title + "</a>";
-			$("#content").html("<h2>" + article.link + "</h2>");
+			var editlink = "<a href='" + article.url + "?action=edit&section=0' class='edit-link'>edit</a>";
+			$("#content").html("<h2>" + article.link + editlink + "</h2>");
 			$("#content").append( article.extract );
 		}
 	});
