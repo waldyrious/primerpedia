@@ -53,8 +53,8 @@ a.edit-link {
 	border-radius: 3px;
 	color: #fff;
 	line-height: 0.7;
-	text-align: center;
 	text-shadow: 0 -1px 0 #4c9021;
+	box-shadow: inset 0 1px 0 0 #a8cc8f;
 }
 
 a.edit-link:hover {
