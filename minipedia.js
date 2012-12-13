@@ -1,5 +1,6 @@
+var apiUrl = "http://en.wikipedia.org/w/api.php?";
+
 function onFormSubmit(){
-	apiUrl = "http://en.wikipedia.org/w/api.php?";
 	// Loading animation from http://www.ajaxload.info/
 	$("#content").html("<img src='loading.gif' alt='Loading...' style='margin:1em 50%'>");
 	// API request to load non-random page:
