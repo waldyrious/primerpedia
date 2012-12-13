@@ -1,5 +1,7 @@
 function onFormSubmit(){
 	apiUrl = "http://en.wikipedia.org/w/api.php?";
+	// Loading animation from http://www.ajaxload.info/
+	$("#content").html("<img src='loading.gif' alt='Loading...' style='margin:1em 50%'>");
 	// API request to load non-random page:
 	// action=parse&page=Concise_Wikipedia&section=0&prop=text&format=txtfm&disablepp
 	// first section of a random article. API query devised by http://stackoverflow.com/q/13517901/266309
