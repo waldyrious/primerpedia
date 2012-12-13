@@ -9,11 +9,11 @@ function onFormSubmit(){
 	// action=query&prop=revisions&rvprop=content&rvparse=&rvsection=0&generator=random&grnnamespace=0&indexpageids=true&format=json
 	$.ajax({
 		// https://www.mediawiki.org/wiki/Extension:MobileFrontend#prop.3Dextracts
-		url: apiUrl + 'action=query&prop=extracts&exintro&generator=random&grnnamespace=0&indexpageids=true&format=json',
+		url: apiUrl + "action=query&prop=extracts&exintro&generator=random&grnnamespace=0&indexpageids=true&format=json",
 		data: {
-		    format: 'json'
+		    format: "json"
 		},
-		dataType: 'jsonp',
+		dataType: "jsonp",
 		success: function(jsonObject) {
 			var pageid = jsonObject.query.pageids[0];
 			var article = jsonObject.query.pages[pageid];
