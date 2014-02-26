@@ -11,11 +11,11 @@
 	</head>
 	<body>
 		<h1>Primerpedia</h1>
-		<form onsubmit='onFormSubmit(); return false;'>
-			<input type='search' placeholder='Search...' autofocus disabled title='Coming soon!'>
-			<input type='button' value='Search' disabled title='Coming soon!'>
-			<input type='submit' value='Load random'>
+		<form onsubmit='search(); return false;'>
+			<input type='search' autocomplete='off' id='search-term' placeholder='Search...' autofocus>
+			<input type='submit' value='Search''>
 		</form>
+		<input type='button' value='Load random' onclick='randomArticle();'>
 		<div id='content'></div>
 		<a id='footer' href='https://github.com/waldir/primerpedia'>
 			source code on github
