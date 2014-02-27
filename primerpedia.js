@@ -14,13 +14,7 @@ function randomArticle(){
 		},
 		dataType: "jsonp",
 		success: function(jsonObject) {
-			var pageid = jsonObject.query.pageids[0];
-			var article = jsonObject.query.pages[pageid];
-			article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
-			article.link = "<a href='" + article.url + "'>" + article.title + "</a>";
-			var editlink = "<a href='" + article.url + "?action=edit&section=0' class='edit-link'>edit</a>";
-			$("#content").html("<h2>" + article.link + editlink + "</h2>");
-			$("#content").append( article.extract );
+			displayArticle(jsonObject);
 		}
 	});
 }
@@ -55,15 +49,19 @@ function loadFromSearch(searchResult){
 			// Option 1: if using action=parse
 			//$("#content").html(jsonObject.parse.text['*']);
 			// Option 2: if using action=query&prop=extracts
-			var pageid = jsonObject.query.pageids[0];
-			var article = jsonObject.query.pages[pageid];
-			article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
-			article.link = "<a href='" + article.url + "'>" + article.title + "</a>";
-			var editlink = "<a href='" + article.url + "?action=edit&section=0' class='edit-link'>edit</a>";
-			$("#content").html("<h2>" + article.link + editlink + "</h2>");
-			$("#content").append( article.extract );
+			loadFromSearch(jsonObject);
 		}
 	});
+}
+
+function displayArticle(articleData){
+	var pageid = articleData.query.pageids[0];
+	var article = articleData.query.pages[pageid];
+	article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
+	article.link = "<a href='" + article.url + "'>" + article.title + "</a>";
+	var editlink = "<a href='" + article.url + "?action=edit&section=0' class='edit-link'>improve this!</a>";
+	$("#content").html("<h2>" + article.link + editlink + "</h2>");
+	$("#content").append( article.extract );
 }
 
 function startSpinner(){
