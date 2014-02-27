@@ -4,11 +4,12 @@
 		<meta charset='utf-8' />
 		<title>Primerpedia</title>
 		<meta name="description" content="A proof of concept for the Concise Wikipedia proposal" />
+		<!-- https://commons.wikimedia.org/wiki/Category:Wikipedia_favicons -->
 		<link rel='icon' type='image/png' href='img/favicon.png' />
-		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js'></script>
 		<script src='primerpedia.js'></script>
 		<link href='primerpedia.css' rel='stylesheet' />
-		<link href='http://fonts.googleapis.com/css?family=Squada+One' rel='stylesheet' type='text/css' />
+		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js'></script>
+		<link href='http://fonts.googleapis.com/css?family=Squada+One' rel='stylesheet' />
 	</head>
 	<body>
 		<h1>Primerpedia</h1>
@@ -21,11 +22,14 @@
 		<div id='footer'>
 			<a href='http://creativecommons.org/licenses/by-sa/3.0/'
 			   title='content licensed under the Creative Commons Attribution-ShareAlike license'>
+				<!-- http://creativecommons.org/about/downloads -->
 				<img src='img/cc.svg' width='30' alt='creative commons icon' /></a>
 			<a href='https://meta.wikimedia.org/wiki/Concise_Wikipedia' title='original proposal and discussion'>
+				<!-- hand-made -->
 				<img src='img/info.svg' width='30' alt='information icon' /></a>
 			<a href='https://github.com/waldir/primerpedia' title='source code on github'>
-				<img src='img/github.svg' width='30' alt='github icon' /><!-- https://github.com/logos --></a>
+				<!-- https://github.com/logos -->
+				<img src='img/github.svg' width='30' alt='github icon' /></a>
 		</div>
 	</body>
 </html>
