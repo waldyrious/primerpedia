@@ -49,7 +49,7 @@ function loadFromSearch(searchResult){
 			// Option 1: if using action=parse
 			//$("#content").html(jsonObject.parse.text['*']);
 			// Option 2: if using action=query&prop=extracts
-			loadFromSearch(jsonObject);
+			displayArticle(jsonObject);
 		}
 	});
 }
