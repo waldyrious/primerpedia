@@ -1,4 +1,4 @@
-body, h2 {
+body, h2, .error {
 	text-align: center;
 }
 
@@ -76,4 +76,9 @@ a.edit-link:active {
 
 .noprint, .Inline-Template, .Template-Fact {
 	display: none;
+}
+
+.error {
+	font-size: small;
+	color: gray;
 }
