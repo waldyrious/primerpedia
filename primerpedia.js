@@ -35,7 +35,7 @@ function search(){
 
 function apiRequest(queryString){
 	// Loading animation from http://www.ajaxload.info/
-	$("#content").html("<img src='img/loading.gif' alt='Loading...' style='margin:1em 50%'>");
+	$("#content").html("<img src='img/loading.gif' alt='Loading...' style='margin:1em 50%' />");
 	$.ajax({
 		url: apiUrl + queryString,
 		data: {
