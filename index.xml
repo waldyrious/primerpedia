@@ -6,10 +6,10 @@
 		<meta name="description" content="A proof of concept for the Concise Wikipedia proposal" />
 		<!-- https://commons.wikimedia.org/wiki/Category:Wikipedia_favicons -->
 		<link rel='icon' type='image/png' href='img/favicon.png' />
-		<script src='primerpedia.js'></script>
-		<link href='primerpedia.css' rel='stylesheet' />
 		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js'></script>
+		<script src='primerpedia.js'></script>
 		<link href='http://fonts.googleapis.com/css?family=Squada+One' rel='stylesheet' />
+		<link href='primerpedia.css' rel='stylesheet' />
 	</head>
 	<body>
 		<h1>Primerpedia</h1>
