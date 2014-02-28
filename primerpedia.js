@@ -44,12 +44,12 @@ function apiRequest(queryString){
 		dataType: "jsonp",
 		success: function(jsonObject){
 			var searchData = jsonObject.query.searchinfo;
-			if( typeof searchData === 'undefined' || searchData.totalhits > 0 ){ //
+			if( typeof searchData === 'undefined' || searchData.totalhits > 0 ){
 				var pageid = jsonObject.query.pageids[0];
 				var article = jsonObject.query.pages[pageid];
 				article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
 				article.link = "<a href='" + article.url + "'>" + article.title + "</a>";
-				var editlink = "<a href='" + article.url + "?action=edit&section=0' class='edit-link'>improve this!</a>";
+				var editlink = "<a href='" + article.url + "?action=edit&amp;section=0' class='edit-link'>improve this!</a>";
 				$("#content").html("<h2>" + article.link + editlink + "</h2>");
 				$("#content").append( article.extract );
 			} else if( typeof searchData.suggestion !== 'undefined' ){
