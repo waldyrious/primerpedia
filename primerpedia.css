@@ -13,11 +13,13 @@ body, h2, .error {
 	font-family: sans-serif;
 }
 
-h1 {
+h1 > a {
 	font-family: 'Squada One', sans-serif;
 	font-weight: normal;
-	font-size: 2.5em;
+	font-size: 1.5em;
 	line-height: 0.5em;
+	text-decoration: none;
+	color: black;
 }
 
 h2 {
