@@ -15,11 +15,13 @@
 	</head>
 	<body>
 		<h1>Primerpedia</h1>
-		<form onsubmit='search(); return false;'>
-			<input type='search' autocomplete='off' id='search-term' placeholder='Search...' autofocus='' />
-			<input type='submit' value='Search' />
-		</form>
-		<input type='button' value='Load random' onclick='random();' />
+		<div id='controls'>
+			<form onsubmit='search(); return false;'>
+				<input type='search' autocomplete='off' id='search-term' placeholder='Search...' autofocus='' />
+				<input type='submit' value='Search' />
+			</form>
+			<input type='button' value='Load random' onclick='random();' />
+		</div>
 		<div id='content'>
 			<p>Primerpedia is a proof-of-concept demo for the
 			<a href='http://meta.wikimedia.org/wiki/Concise_Wikipedia'>Concise Wikipedia</a> proposal.

@@ -2,10 +2,13 @@ body, h2, .error {
 	text-align: center;
 }
 
-#content {
+#controls, #content {
 	margin: 0 auto;
 	width: 80%;
 	padding: 1em;
+}
+
+#content {
 	text-align: left;
 	font-family: sans-serif;
 }
