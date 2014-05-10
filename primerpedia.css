@@ -18,7 +18,7 @@ body, h2, .error {
 	font-family: sans-serif;
 }
 
-h1 > a {
+h1 > a, h1 > a:visited {
 	font-family: 'Squada One', sans-serif;
 	font-weight: normal;
 	font-size: 1.5em;
