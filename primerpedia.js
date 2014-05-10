@@ -44,7 +44,7 @@ function apiRequest(queryString){
 		dataType: "jsonp",
 		success: function(jsonObject){
 			var searchData = jsonObject.query.searchinfo;
-			if( typeof searchData === 'undefined' || searchData.totalhits > 0 ){
+			if( typeof searchData === "undefined" || searchData.totalhits > 0 ){
 				var pageid = jsonObject.query.pageids[0];
 				var article = jsonObject.query.pages[pageid];
 				article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
@@ -54,7 +54,7 @@ function apiRequest(queryString){
 				$("#content").append( article.extract );
 				$("#license-icon").show();
 				$("#info-icon").show();
-			} else if( typeof searchData.suggestion !== 'undefined' ){
+			} else if( typeof searchData.suggestion !== "undefined" ){
 				apiRequest( apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion );
 			} else {
 				$("#content").html("<div class='error'>The search term wasn't found.</div>");
