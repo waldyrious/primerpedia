@@ -97,3 +97,11 @@ a.edit-link:active {
 input[type=search], input[type=submit], input[type=button] {
 	font-size: inherit;
 }
+
+#footer a {
+    display: inline-block;
+}
+
+object {
+    pointer-events: none;
+}
