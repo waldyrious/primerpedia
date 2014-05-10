@@ -52,6 +52,8 @@ function apiRequest(queryString){
 				var editlink = "<a href='" + article.url + "?action=edit&amp;section=0' class='edit-link'>improve this!</a>";
 				$("#content").html("<h2>" + article.link + editlink + "</h2>");
 				$("#content").append( article.extract );
+				$("#license-icon").show();
+				$("#info-icon").show();
 			} else if( typeof searchData.suggestion !== 'undefined' ){
 				apiRequest( apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion );
 			} else {
