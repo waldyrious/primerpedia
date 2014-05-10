@@ -1,3 +1,7 @@
+body {
+	min-width: 280px;
+}
+
 body, h2, .error {
 	text-align: center;
 }
@@ -33,8 +37,29 @@ h2 {
 	border-radius: 5px;
 }
 
+#controls {
+	white-space: nowrap;
+}
+
 form {
 	display: inline-block;
+}
+
+form input {
+	margin: 0 1%;
+}
+
+#search-term {
+	width: calc(100% - 15em);
+	min-width: 5em;
+}
+
+#controls input[type=submit] {
+	width: 4.5em;
+}
+
+#controls input[type=button] {
+	width: 7.5em;
 }
 
 a {
@@ -90,4 +115,8 @@ a.edit-link:active {
 .error {
 	font-size: small;
 	color: gray;
+}
+
+input[type=search], input[type=submit], input[type=button] {
+	font-size: inherit;
 }
