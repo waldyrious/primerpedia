@@ -36,7 +36,7 @@ h2 {
 form input {
 	margin: 1%;
 	height: 2.5em;
-	box-sizing: border-box;
+	box-sizing: padding-box;
 }
 
 a {
