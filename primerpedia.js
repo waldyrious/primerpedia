@@ -10,8 +10,8 @@
  *    using generator=random&grnnamespace=0,
  *    or with a search generator, using generator=search.
  *    But the parser returns the full html, so we'd have to clean it up ourselves.
- * 3) Finally, we can use the prop=extracts query (from the Extension:MobileFrontend's extracts,
- *    see https://www.mediawiki.org/wiki/Extension:MobileFrontend#prop.3Dextracts)
+ * 3) Finally, we can use the prop=extracts query (from Extension:TextExtracts,
+ *    see https://www.mediawiki.org/wiki/Extension:TextExtracts)
  *    coupled with the "exintro" parameter. This can be paired
  *    with a random page generator or a search generator.
  *    The cleanup is pretty good, but links are removed (maybe not a bad thing)
