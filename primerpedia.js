@@ -48,10 +48,11 @@ function apiRequest(queryString){
 				var pageid = jsonObject.query.pageids[0];
 				var article = jsonObject.query.pages[pageid];
 				article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
-				article.link = "<a href='" + article.url + "'>" + article.title + "</a>";
-				var editlink = "<a href='" + article.url + "?action=edit&amp;section=0' class='edit-link'>improve this!</a>";
-				$("#content").html("<h2>" + article.link + editlink + "</h2>");
-				$("#content").append( article.extract );
+				var editlink = article.url + "?action=edit&amp;section=0";
+				$("#viewlink").text(article.title).attr('href', article.url);
+				$("#editlink").attr('href', editlink);
+				$("#article-title").show();
+				$("#content").html( article.extract );
 				$("#license-icon").show();
 				$("#info-icon").show();
 			} else if( typeof searchData.suggestion !== "undefined" ){
