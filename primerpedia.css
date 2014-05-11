@@ -103,11 +103,6 @@ object {
     pointer-events: none; /* allow clicking on the link that wraps the svg */
 }
 
-/* special rules for elements that the extracts' processing isn't removing */
-.noprint, .Inline-Template, .Template-Fact, ul.gallery {
-	display: none;
-}
-
 .error {
 	font-size: small;
 	color: gray;
