@@ -37,7 +37,7 @@ h2 {
 form input {
 	margin: 1%;
 	height: 2em;
-	box-sizing: padding-box; /* harmonize the box model of the text input and the buttons */
+	box-sizing: padding-box; /* harmonize box model of text input and buttons */
 }
 
 a {
@@ -71,11 +71,11 @@ a:active {
 	box-shadow: inset 0 1px 0 0 #a8cc8f;
 	/* text */
 	color: white;
-	font-weight: normal; /* override the default (bold), inherited from the h2 */
+	font-weight: normal; /* override the default (bold), inherited from h2 */
 	text-shadow: 0 -1px 0 #4c9021;
-	transform: scaleX(-1);         /* there's no unicode character for a pencil   */
-	-webkit-transform: scaleX(-1); /* pointing down-left, so use the one pointing */
-                                   /* down-right and mirror it                    */
+	transform: scaleX(-1);         /* There's no unicode character for a    */
+	-webkit-transform: scaleX(-1); /* pencil pointing down-left, so use the */
+	                               /* one pointing down-right and mirror it */
 }
 
 #editlink:hover {
@@ -95,12 +95,12 @@ input[type=search], input[type=submit], input[type=button] {
 	font-size: inherit;
 }
 
-#footer a:hover {           /* prevent underline from appearing */
+#footer a:hover {        /* prevent underline from appearing       */
 	text-decoration: none; /* under the whitespace between the links */
-}                            /* caused from the code indentation */
+}                        /* caused from the code indentation       */
 
 object {
-    pointer-events: none; /* allow clicking on the link that wraps the svg */
+	pointer-events: none; /* allow clicking on the link that wraps the svg */
 }
 
 .error {
