@@ -1,9 +1,8 @@
 Primerpedia
 =========
 
-![dev](http://img.shields.io/badge/version-v0.1212%2B105-yellow.svg?style=flat)&nbsp;
-![rel](http://img.shields.io/badge/release-none-lightgrey.svg?style=flat)&nbsp;
-![issues](http://img.shields.io/github/issues/waldyrious/primerpedia.svg?style=flat)
+![issues](http://img.shields.io/github/issues/waldyrious/primerpedia.svg)&nbsp;
+![license](https://img.shields.io/github/license/waldyrious/primerpedia.svg)
 
 Primerpedia is a proof-of-concept demo for the
 [Concise Wikipedia](http://meta.wikimedia.org/wiki/Concise_Wikipedia) proposal.
