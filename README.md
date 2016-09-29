@@ -1,8 +1,13 @@
 Primerpedia
 =========
 
-![issues](http://img.shields.io/github/issues/waldyrious/primerpedia.svg)&nbsp;
-![license](https://img.shields.io/github/license/waldyrious/primerpedia.svg)
+[![issues][issues-img]][issues-url]
+[![license][license-img]][license-url]
+
+[issues-url]: https://github.com/waldyrious/primerpedia/issues
+[issues-img]: http://img.shields.io/github/issues/waldyrious/primerpedia.svg
+[license-url]: https://github.com/waldyrious/primerpedia/blob/gh-pages/LICENSE.md
+[license-img]: https://img.shields.io/github/license/waldyrious/primerpedia.svg
 
 Primerpedia is a proof-of-concept demo for the
 [Concise Wikipedia](http://meta.wikimedia.org/wiki/Concise_Wikipedia) proposal.
