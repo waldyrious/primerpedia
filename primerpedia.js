@@ -63,3 +63,23 @@ function apiRequest(queryString){
 		}
 	});
 }
+
+function getQueryVariable(variable) {
+	// http://stackoverflow.com/questions/2090551/parse-query-string-in-javascript/2091331#2091331
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) == variable) {
+            return decodeURIComponent(pair[1]);
+        }
+    }
+    return null;
+}
+
+$(document).ready(function() {
+	if (getQueryVariable("page")) {
+		document.getElementById('search-term').value = getQueryVariable("page");
+		search();
+	}
+});
