@@ -18,7 +18,7 @@
  *    and some templates are still displayed, so they need to be hidden via css
  */
 
-var apiUrl = "https://en.wikipedia.org/w/api.php?";
+var apiUrl = "http://en.wikipedia.org/w/api.php?";
 // https://www.mediawiki.org/wiki/Extension:MobileFrontend#prop.3Dextracts
 var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
 
@@ -65,7 +65,7 @@ function apiRequest(queryString){
 }
 
 function getQueryVariable(variable) {
-	// http://stackoverflow.com/questions/2090551/parse-query-string-in-javascript
+	// http://stackoverflow.com/questions/2090551/parse-query-string-in-javascript/2091331#2091331
     var query = window.location.search.substring(1);
     var vars = query.split('&');
     for (var i = 0; i < vars.length; i++) {
@@ -78,8 +78,8 @@ function getQueryVariable(variable) {
 }
 
 $(document).ready(function() {
-	if (getQueryVariable("q")) {
-		document.getElementById('search-term').value = getQueryVariable("q");
+	if (getQueryVariable("page")) {
+		document.getElementById('search-term').value = getQueryVariable("page");
 		search();
 	}
 });
