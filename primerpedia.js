@@ -18,7 +18,7 @@
  *    and some templates are still displayed, so they need to be hidden via css
  */
 
-var apiUrl = "http://en.wikipedia.org/w/api.php?";
+var apiUrl = "https://en.wikipedia.org/w/api.php?";
 // https://www.mediawiki.org/wiki/Extension:MobileFrontend#prop.3Dextracts
 var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
 
