@@ -39,7 +39,7 @@ function apiRequest(queryString){
 	$.ajax({
 		url: apiUrl + queryString,
 		data: {
-		    format: "json"
+			format: "json"
 		},
 		dataType: "jsonp",
 		success: function(jsonObject){
@@ -64,17 +64,18 @@ function apiRequest(queryString){
 	});
 }
 
+// Get query string from URL parameter
+// http://stackoverflow.com/a/2091331/266309
 function getQueryVariable(variable) {
-	// http://stackoverflow.com/questions/2090551/parse-query-string-in-javascript/2091331#2091331
-    var query = window.location.search.substring(1);
-    var vars = query.split('&');
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
-        if (decodeURIComponent(pair[0]) == variable) {
-            return decodeURIComponent(pair[1]);
-        }
-    }
-    return null;
+	var query = window.location.search.substring(1);
+	var vars = query.split('&');
+	for (var i = 0; i < vars.length; i++) {
+		var pair = vars[i].split('=');
+		if (decodeURIComponent(pair[0]) == variable) {
+			return decodeURIComponent(pair[1]);
+		}
+	}
+	return null;
 }
 
 $(document).ready(function() {
