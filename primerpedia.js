@@ -21,6 +21,8 @@
 var apiUrl = "http://en.wikipedia.org/w/api.php?";
 // https://www.mediawiki.org/wiki/Extension:MobileFrontend#prop.3Dextracts
 var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
+var requestTimeoutInMs = 3000;
+var requestCallbackName = "requestCallback";
 
 function random() {
 	apiRequest(apiExtractsQuery + "&generator=random&grnnamespace=0");
@@ -36,32 +38,52 @@ function search() {
 function apiRequest(queryString) {
 	// Loading animation from http://www.ajaxload.info/
 	$("#content").html("<img src='img/loading.gif' alt='Loading...' style='margin:1em 50%' />");
-	$.ajax({
-		url: apiUrl + queryString,
-		data: {
-			format: "json"
-		},
-		dataType: "jsonp",
-		success: function (jsonObject) {
-			var searchData = jsonObject.query.searchinfo;
-			if(typeof searchData === "undefined" || searchData.totalhits > 0) {
-				var pageid = jsonObject.query.pageids[0];
-				var article = jsonObject.query.pages[pageid];
-				article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
-				var editlink = article.url + "?action=edit&amp;section=0";
-				$("#viewlink").text(article.title).attr('href', article.url);
-				$("#editlink").attr('href', editlink);
-				$("#article-title").show();
-				$("#content").html(article.extract);
-				$("#license-icon").show();
-				$("#info-icon").show();
-			} else if(typeof searchData.suggestion !== "undefined") {
-				apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion);
-			} else {
-				$("#content").html("<div class='error'>The search term wasn't found.</div>");
-			}
-		}
-	});
+
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.async = true;
+	script.src = apiUrl + queryString + "&callback=" + requestCallbackName;
+
+	document.getElementsByTagName("head")[0].appendChild(script);
+
+	var onCompleted = function () {
+		// reduce global namespace pollution
+		delete (window[requestCallbackName]);
+		// remove jsonp result tag
+		script.remove();
+	}
+
+	var requestTimeout = window.setTimeout(function () {
+		onCompleted();
+	}, requestTimeoutInMs);
+
+	window[requestCallbackName] = function (jsonObject) {
+		window.clearTimeout(requestTimeout);
+
+		handleRequestResult(jsonObject);
+
+		onCompleted();
+	}
+}
+
+function handleRequestResult(jsonObject) {
+	var searchData = jsonObject.query.searchinfo;
+	if(typeof searchData === "undefined" || searchData.totalhits > 0) {
+		var pageid = jsonObject.query.pageids[0];
+		var article = jsonObject.query.pages[pageid];
+		article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
+		var editlink = article.url + "?action=edit&amp;section=0";
+		$("#viewlink").text(article.title).attr('href', article.url);
+		$("#editlink").attr('href', editlink);
+		$("#article-title").show();
+		$("#content").html(article.extract);
+		$("#license-icon").show();
+		$("#info-icon").show();
+	} else if(typeof searchData.suggestion !== "undefined") {
+		apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion);
+	} else {
+		$("#content").html("<div class='error'>The search term wasn't found.</div>");
+	}
 }
 
 // Get query string from URL parameter
