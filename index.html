@@ -57,11 +57,11 @@
 			</a>
 		</div>
 		<script>
-			$('body').flowtype({
-				minFont   : 12,   // minimum font size (in px)
-				maxFont   : 30,   // maximum font size (in px)
-				fontRatio : 75    // line-height ratio (not sure how exactly it works)
-			});
+				window.flowtype(document.getElementsByTagName("body")[0], {
+					minFont: 12,   // minimum font size (in px)
+					maxFont: 30,   // maximum font size (in px)
+					fontRatio: 75    // line-height ratio (not sure how exactly it works)
+				})
 		</script>
 		<script src='primerpedia.js'></script>
 	</body>
