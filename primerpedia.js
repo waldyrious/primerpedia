@@ -159,9 +159,9 @@ function getQueryVariable(parameter) {
 }
 
 // Upon loading the page, check if an URL parameter was passed, and use it to perform a search
-$(document).ready(function () {
+window.onload = function () {
 	if(getQueryVariable("search")) {
 		document.getElementById('search-term').value = getQueryVariable("search");
 		search();
 	}
-});
+}
