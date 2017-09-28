@@ -66,23 +66,43 @@ function apiRequest(queryString) {
 	}
 }
 
+function toggleVisibility(element, visibility) {
+	if(element instanceof HTMLElement) {
+		if(!visibility) {
+			element.style.setProperty("display", "none");
+		} else {
+			element.style.removeProperty("display");
+		}
+	}
+}
+
 function handleRequestResult(jsonObject) {
 	var searchData = jsonObject.query.searchinfo;
+	//TODO: fix wrong undefined check
 	if(typeof searchData === "undefined" || searchData.totalhits > 0) {
 		var pageid = jsonObject.query.pageids[0];
 		var article = jsonObject.query.pages[pageid];
 		article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
 		var editlink = article.url + "?action=edit&amp;section=0";
-		$("#viewlink").text(article.title).attr('href', article.url);
-		$("#editlink").attr('href', editlink);
-		$("#article-title").show();
-		$("#content").html(article.extract);
-		$("#license-icon").show();
-		$("#info-icon").show();
+
+		var viewLinkElem = document.getElementById("viewlink");
+
+		viewLinkElem.textContent = article.title;
+		viewLinkElem.setAttribute("href", article.url);
+
+		document.getElementById("editlink").setAttribute("href", editlink);
+		toggleVisibility(document.getElementById("article-title"), true);
+		document.getElementById("content").innerHTML = article.extract;
+		toggleVisibility(document.getElementById("license-icon"), true);
+		toggleVisibility(document.getElementById("info-icon"), true);
 	} else if(typeof searchData.suggestion !== "undefined") {
 		apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion);
 	} else {
-		$("#content").html("<div class='error'>The search term wasn't found.</div>");
+		var notFoundNode = document.createElement("div");
+		notFoundNode.classList.add("error");
+		notFoundNode.textContent = "The search term wasn't found.";
+
+		document.getElementById("content").appendChild(notFoundNode);
 	}
 }
 
