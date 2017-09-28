@@ -107,6 +107,10 @@ function renderSearchResult(jsonObject) {
 }
 
 function renderNotFoundNode() {
+	toggleVisibility(document.getElementById("article-title"), false);
+	toggleVisibility(document.getElementById("license-icon"), false);
+	toggleVisibility(document.getElementById("info-icon"), false);
+
 	var notFoundNode = document.createElement("div");
 	notFoundNode.classList.add("error");
 	notFoundNode.textContent = "The search term wasn't found.";
