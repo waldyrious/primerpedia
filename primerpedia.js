@@ -22,18 +22,18 @@ var apiUrl = "http://en.wikipedia.org/w/api.php?";
 // https://www.mediawiki.org/wiki/Extension:MobileFrontend#prop.3Dextracts
 var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
 
-function random(){
-	apiRequest( apiExtractsQuery + "&generator=random&grnnamespace=0" );
+function random() {
+	apiRequest(apiExtractsQuery + "&generator=random&grnnamespace=0");
 }
 
-function search(){
+function search() {
 	searchTerm = $('#search-term')[0].value;
 	if(searchTerm)
-		apiRequest( apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm );
+		apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm);
 	else random();
 }
 
-function apiRequest(queryString){
+function apiRequest(queryString) {
 	// Loading animation from http://www.ajaxload.info/
 	$("#content").html("<img src='img/loading.gif' alt='Loading...' style='margin:1em 50%' />");
 	$.ajax({
@@ -42,9 +42,9 @@ function apiRequest(queryString){
 			format: "json"
 		},
 		dataType: "jsonp",
-		success: function(jsonObject){
+		success: function (jsonObject) {
 			var searchData = jsonObject.query.searchinfo;
-			if( typeof searchData === "undefined" || searchData.totalhits > 0 ){
+			if(typeof searchData === "undefined" || searchData.totalhits > 0) {
 				var pageid = jsonObject.query.pageids[0];
 				var article = jsonObject.query.pages[pageid];
 				article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
@@ -52,11 +52,11 @@ function apiRequest(queryString){
 				$("#viewlink").text(article.title).attr('href', article.url);
 				$("#editlink").attr('href', editlink);
 				$("#article-title").show();
-				$("#content").html( article.extract );
+				$("#content").html(article.extract);
 				$("#license-icon").show();
 				$("#info-icon").show();
-			} else if( typeof searchData.suggestion !== "undefined" ){
-				apiRequest( apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion );
+			} else if(typeof searchData.suggestion !== "undefined") {
+				apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion);
 			} else {
 				$("#content").html("<div class='error'>The search term wasn't found.</div>");
 			}
@@ -72,10 +72,10 @@ function getQueryVariable(parameter) {
 	// Split each parameter=value pair using '&' as separator
 	var vars = query.split('&');
 	// Loop over all the parameter=value pairs, and split them into their parameter/value components
-	for (var i = 0; i < vars.length; i++) {
+	for(var i = 0; i < vars.length; i++) {
 		var pair = vars[i].split('=');
 		// If one of the parameter names is the one we're looking for, return its value
-		if (decodeURIComponent(pair[0]) == parameter) {
+		if(decodeURIComponent(pair[0]) == parameter) {
 			return decodeURIComponent(pair[1]);
 		}
 	}
@@ -83,8 +83,8 @@ function getQueryVariable(parameter) {
 }
 
 // Upon loading the page, check if an URL parameter was passed, and use it to perform a search
-$(document).ready(function() {
-	if (getQueryVariable("search")) {
+$(document).ready(function () {
+	if(getQueryVariable("search")) {
 		document.getElementById('search-term').value = getQueryVariable("search");
 		search();
 	}
