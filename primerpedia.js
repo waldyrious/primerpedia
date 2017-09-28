@@ -76,34 +76,64 @@ function toggleVisibility(element, visibility) {
 	}
 }
 
+function clearNode(node) {
+	var clone = node.cloneNode(false);
+	node.parentNode.replaceChild(clone, node);
+
+	return clone;
+}
+
+function renderSearchResult(jsonObject) {
+	var pageid = jsonObject.query.pageids[0];
+	var article = jsonObject.query.pages[pageid];
+	article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
+	var editlink = article.url + "?action=edit&amp;section=0";
+
+	var viewLinkElem = document.getElementById("viewlink");
+
+	viewLinkElem.textContent = article.title;
+	viewLinkElem.setAttribute("href", article.url);
+
+	document.getElementById("editlink").setAttribute("href", editlink);
+	toggleVisibility(document.getElementById("article-title"), true);
+
+	var contentNode = document.getElementById("content");
+
+	contentNode = clearNode(contentNode);
+	contentNode.innerHTML = article.extract;
+
+	toggleVisibility(document.getElementById("license-icon"), true);
+	toggleVisibility(document.getElementById("info-icon"), true);
+}
+
+function renderNotFoundNode() {
+	var notFoundNode = document.createElement("div");
+	notFoundNode.classList.add("error");
+	notFoundNode.textContent = "The search term wasn't found.";
+
+	var contentNode = document.getElementById("content");
+
+	contentNode = clearNode(contentNode);
+
+	contentNode.appendChild(notFoundNode);
+}
+
 function handleRequestResult(jsonObject) {
-	var searchData = jsonObject.query.searchinfo;
-	//TODO: fix wrong undefined check
-	if(typeof searchData === "undefined" || searchData.totalhits > 0) {
-		var pageid = jsonObject.query.pageids[0];
-		var article = jsonObject.query.pages[pageid];
-		article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
-		var editlink = article.url + "?action=edit&amp;section=0";
+	if(jsonObject.hasOwnProperty("query")) {
+		var searchData = jsonObject.query.searchinfo;
 
-		var viewLinkElem = document.getElementById("viewlink");
+		if(typeof searchData === "undefined" || searchData.totalhits > 0) {
+			renderSearchResult(jsonObject);
 
-		viewLinkElem.textContent = article.title;
-		viewLinkElem.setAttribute("href", article.url);
+			return;
+		} else if(typeof searchData.suggestion !== "undefined") {
+			apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion);
 
-		document.getElementById("editlink").setAttribute("href", editlink);
-		toggleVisibility(document.getElementById("article-title"), true);
-		document.getElementById("content").innerHTML = article.extract;
-		toggleVisibility(document.getElementById("license-icon"), true);
-		toggleVisibility(document.getElementById("info-icon"), true);
-	} else if(typeof searchData.suggestion !== "undefined") {
-		apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion);
-	} else {
-		var notFoundNode = document.createElement("div");
-		notFoundNode.classList.add("error");
-		notFoundNode.textContent = "The search term wasn't found.";
-
-		document.getElementById("content").appendChild(notFoundNode);
+			return;
+		}
 	}
+
+	renderNotFoundNode();
 }
 
 // Get query string from URL parameter
