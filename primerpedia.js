@@ -29,15 +29,16 @@ function random() {
 }
 
 function search() {
-	searchTerm = $('#search-term')[0].value;
+	var searchTerm = document.getElementById('search-term').value;
 	if(searchTerm)
 		apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm);
 	else random();
 }
 
 function apiRequest(queryString) {
-	// Loading animation from http://www.ajaxload.info/
-	$("#content").html("<img src='img/loading.gif' alt='Loading...' style='margin:1em 50%' />");
+	// Show animated loading spinner -- from http://www.ajaxload.info
+	var mainContainer = document.getElementById("content");
+	mainContainer.innerHTML = "<img src='img/loading.gif' alt='Loading...' style='margin:1em 50%' />";
 
 	var script = document.createElement("script");
 	script.type = "text/javascript";
