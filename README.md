@@ -13,7 +13,7 @@ Primerpedia is a proof-of-concept demo for the
 [Concise Wikipedia](http://meta.wikimedia.org/wiki/Concise_Wikipedia) proposal.
 It provides short summaries of Wikipedia articles,
 for when you just need a quick overview at the topic.
-Try the live demo here: **http://waldyrious.github.com/primerpedia**
+Try the live demo here: **http://waldyrious.github.io/primerpedia**
 
 To achieve this, it uses the MediaWiki API to fetch the first section of an article,
 and cleans it up for presentation, removing extra details and editing-related templates
