@@ -10,12 +10,12 @@
  *    using generator=random&grnnamespace=0,
  *    or with a search generator, using generator=search.
  *    But the parser returns the full html, so we'd have to clean it up ourselves.
- * 3) Finally, we can use the prop=extracts query (from Extension:TextExtracts,
- *    see https://www.mediawiki.org/wiki/Extension:TextExtracts)
- *    coupled with the "exintro" parameter. This can be paired
- *    with a random page generator or a search generator.
+ * 3) The third option (and the one we are using at the moment) is the prop=extracts query
+ *    (from Extension:TextExtracts, https://www.mediawiki.org/wiki/Extension:TextExtracts),
+ *    coupled with the "exintro" parameter.
+ *    This can be paired with a random page generator, or a search generator.
  *    The cleanup is pretty good, but links are removed (maybe not a bad thing)
- *    and some templates are still displayed, so they need to be hidden via css
+ *    and some templates are still displayed, so they need to be hidden via css.
  */
 
 var apiUrl = "http://en.wikipedia.org/w/api.php?";
