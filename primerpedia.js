@@ -21,47 +21,123 @@
 var apiUrl = "http://en.wikipedia.org/w/api.php?";
 // https://www.mediawiki.org/wiki/Extension:MobileFrontend#prop.3Dextracts
 var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
+var requestTimeoutInMs = 3000;
+var requestCallbackName = "requestCallback";
 
-function random(){
-	apiRequest( apiExtractsQuery + "&generator=random&grnnamespace=0" );
+function random() {
+	apiRequest(apiExtractsQuery + "&generator=random&grnnamespace=0");
 }
 
-function search(){
+function search() {
 	searchTerm = $('#search-term')[0].value;
 	if(searchTerm)
-		apiRequest( apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm );
+		apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm);
 	else random();
 }
 
-function apiRequest(queryString){
+function apiRequest(queryString) {
 	// Loading animation from http://www.ajaxload.info/
 	$("#content").html("<img src='img/loading.gif' alt='Loading...' style='margin:1em 50%' />");
-	$.ajax({
-		url: apiUrl + queryString,
-		data: {
-			format: "json"
-		},
-		dataType: "jsonp",
-		success: function(jsonObject){
-			var searchData = jsonObject.query.searchinfo;
-			if( typeof searchData === "undefined" || searchData.totalhits > 0 ){
-				var pageid = jsonObject.query.pageids[0];
-				var article = jsonObject.query.pages[pageid];
-				article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
-				var editlink = article.url + "?action=edit&amp;section=0";
-				$("#viewlink").text(article.title).attr('href', article.url);
-				$("#editlink").attr('href', editlink);
-				$("#article-title").show();
-				$("#content").html( article.extract );
-				$("#license-icon").show();
-				$("#info-icon").show();
-			} else if( typeof searchData.suggestion !== "undefined" ){
-				apiRequest( apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion );
-			} else {
-				$("#content").html("<div class='error'>The search term wasn't found.</div>");
-			}
+
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.async = true;
+	script.src = apiUrl + queryString + "&callback=" + requestCallbackName;
+
+	document.getElementsByTagName("head")[0].appendChild(script);
+
+	var onCompleted = function () {
+		// reduce global namespace pollution
+		delete (window[requestCallbackName]);
+		// remove jsonp result tag
+		script.remove();
+	}
+
+	var requestTimeout = window.setTimeout(function () {
+		onCompleted();
+	}, requestTimeoutInMs);
+
+	window[requestCallbackName] = function (jsonObject) {
+		window.clearTimeout(requestTimeout);
+
+		handleRequestResult(jsonObject);
+
+		onCompleted();
+	}
+}
+
+function toggleVisibility(element, visibility) {
+	if(element instanceof HTMLElement) {
+		if(!visibility) {
+			element.style.setProperty("display", "none");
+		} else {
+			element.style.removeProperty("display");
 		}
-	});
+	}
+}
+
+function clearNode(node) {
+	var clone = node.cloneNode(false);
+	node.parentNode.replaceChild(clone, node);
+
+	return clone;
+}
+
+function renderSearchResult(jsonObject) {
+	var pageid = jsonObject.query.pageids[0];
+	var article = jsonObject.query.pages[pageid];
+	article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
+	var editlink = article.url + "?action=edit&amp;section=0";
+
+	var viewLinkElem = document.getElementById("viewlink");
+
+	viewLinkElem.textContent = article.title;
+	viewLinkElem.setAttribute("href", article.url);
+
+	document.getElementById("editlink").setAttribute("href", editlink);
+	toggleVisibility(document.getElementById("article-title"), true);
+
+	var contentNode = document.getElementById("content");
+
+	contentNode = clearNode(contentNode);
+	contentNode.innerHTML = article.extract;
+
+	toggleVisibility(document.getElementById("license-icon"), true);
+	toggleVisibility(document.getElementById("info-icon"), true);
+}
+
+function renderNotFoundNode() {
+	toggleVisibility(document.getElementById("article-title"), false);
+	toggleVisibility(document.getElementById("license-icon"), false);
+	toggleVisibility(document.getElementById("info-icon"), false);
+
+	var notFoundNode = document.createElement("div");
+	notFoundNode.classList.add("error");
+	notFoundNode.textContent = "The search term wasn't found.";
+
+	var contentNode = document.getElementById("content");
+
+	contentNode = clearNode(contentNode);
+
+	contentNode.appendChild(notFoundNode);
+}
+
+function handleRequestResult(jsonObject) {
+	if(jsonObject.hasOwnProperty("query")) {
+		var searchData = jsonObject.query.searchinfo;
+
+		if(typeof searchData === "undefined" || searchData.totalhits > 0) {
+			renderSearchResult(jsonObject);
+
+			return;
+		} else if(typeof searchData.suggestion !== "undefined") {
+			apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion);
+
+			return;
+		}
+	}
+
+	renderNotFoundNode();
 }
 
 // Get query string from URL parameter
@@ -72,10 +148,10 @@ function getQueryVariable(parameter) {
 	// Split each parameter=value pair using '&' as separator
 	var vars = query.split('&');
 	// Loop over all the parameter=value pairs, and split them into their parameter/value components
-	for (var i = 0; i < vars.length; i++) {
+	for(var i = 0; i < vars.length; i++) {
 		var pair = vars[i].split('=');
 		// If one of the parameter names is the one we're looking for, return its value
-		if (decodeURIComponent(pair[0]) == parameter) {
+		if(decodeURIComponent(pair[0]) == parameter) {
 			return decodeURIComponent(pair[1]);
 		}
 	}
@@ -83,9 +159,11 @@ function getQueryVariable(parameter) {
 }
 
 // Upon loading the page, check if an URL parameter was passed, and use it to perform a search
-$(document).ready(function() {
-	if (getQueryVariable("search")) {
-		document.getElementById('search-term').value = getQueryVariable("search");
+window.onload = function () {
+	var queryParam = getQueryVariable("search");
+
+	if(queryParam !== null) {
+		document.getElementById('search-term').value = queryParam;
 		search();
 	}
-});
+}

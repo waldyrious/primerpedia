@@ -8,7 +8,6 @@
 		<!-- https://commons.wikimedia.org/wiki/Category:Wikipedia_favicons -->
 		<link rel='icon' type='image/png' href='img/favicon.png' />
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js'></script>
-		<script src='primerpedia.js'></script>
 		<script src='flowtype.js'></script>
 		<link href='http://fonts.googleapis.com/css?family=Squada+One' rel='stylesheet' />
 		<link href='primerpedia.css' rel='stylesheet' />
@@ -58,11 +57,12 @@
 			</a>
 		</div>
 		<script>
-			$('body').flowtype({
-				minFont   : 12,   // minimum font size (in px)
-				maxFont   : 30,   // maximum font size (in px)
-				fontRatio : 75    // line-height ratio (not sure how exactly it works)
-			});
+				window.flowtype(document.getElementsByTagName("body")[0], {
+					minFont: 12,   // minimum font size (in px)
+					maxFont: 30,   // maximum font size (in px)
+					fontRatio: 75    // line-height ratio (not sure how exactly it works)
+				})
 		</script>
+		<script src='primerpedia.js'></script>
 	</body>
 </html>
