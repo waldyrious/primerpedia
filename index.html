@@ -1,15 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns='http://www.w3.org/1999/xhtml' lang='en'>
 	<head>
 		<meta charset='utf-8' />
 		<title>Primerpedia</title>
 		<meta name='description' content='A proof of concept for the Concise Wikipedia proposal' />
 		<meta name='viewport' content='width=device-width' />
-		<!-- https://commons.wikimedia.org/wiki/Category:Wikipedia_favicons -->
+		<!-- Icon source: https://commons.wikimedia.org/wiki/Category:Wikipedia_favicons -->
 		<link rel='icon' type='image/png' href='img/favicon.png' />
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js'></script>
 		<script src='flowtype.js'></script>
-		<link href='http://fonts.googleapis.com/css?family=Squada+One' rel='stylesheet' />
+		<link href='https://fonts.googleapis.com/css?family=Squada+One' rel='stylesheet' />
 		<link href='primerpedia.css' rel='stylesheet' />
 	</head>
 	<body>
@@ -27,23 +27,23 @@
 		</h2>
 		<div id='content'>
 			<p>Primerpedia is a proof-of-concept demo for the
-			<b><a href='http://meta.wikimedia.org/wiki/Concise_Wikipedia'>Concise Wikipedia</a></b> proposal.
+			<b><a href='https://meta.wikimedia.org/wiki/Concise_Wikipedia'>Concise Wikipedia</a></b> proposal.
 			It provides short summaries of Wikipedia articles,
 			for when you just need a quick overview at the topic.</p>
 			<p>For more information, check the
-			<a href='https://github.com/waldir/primerpedia#primerpedia'>README</a> file.</p>
+			<a href='https://github.com/waldyrious/primerpedia#primerpedia'>README</a> file.</p>
 		</div>
 		<div id='footer'>
-			<a href='http://creativecommons.org/licenses/by-sa/3.0/' style='display:none' id='license-icon'
+			<a href='https://creativecommons.org/licenses/by-sa/3.0/' style='display:none' id='license-icon'
 			   title='Content licensed under the Creative Commons Attribution-ShareAlike license'>
-				<!-- icon source: http://creativecommons.org/about/downloads -->
+				<!-- Icon source: https://creativecommons.org/about/downloads -->
 				<object data='img/cc.svg'>
 					<img src='img/cc.png' alt='information icon' />
 				</object>
 			</a>
-			<a href='https://github.com/waldir/primerpedia' id='github-icon'
+			<a href='https://github.com/waldyrious/primerpedia' id='github-icon'
 			   title='Source code on github'>
-				<!-- icon source: https://github.com/logos -->
+				<!-- Icon source: https://github.com/logos -->
 				<object data='img/github.svg'>
 					<img src='img/github.png' alt='github icon' />
 				</object>
@@ -57,11 +57,11 @@
 			</a>
 		</div>
 		<script>
-				window.flowtype(document.getElementsByTagName("body")[0], {
-					minFont: 12,   // minimum font size (in px)
-					maxFont: 30,   // maximum font size (in px)
-					fontRatio: 75    // line-height ratio (not sure how exactly it works)
-				})
+			window.flowtype(document.getElementsByTagName("body")[0], {
+				minFont: 12,   // minimum font size (in px)
+				maxFont: 30,   // maximum font size (in px)
+				fontRatio: 75  // line-height ratio (not sure how exactly it works)
+			})
 		</script>
 		<script src='primerpedia.js'></script>
 	</body>
