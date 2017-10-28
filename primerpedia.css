@@ -1,6 +1,6 @@
 body {
 	min-width: 280px;
-	line-height: 1.5;
+	line-height: 1.5 !important; /* TODO: remove !important when #27 is fixed. */
 }
 
 body, h2, .error {
