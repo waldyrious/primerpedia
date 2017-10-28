@@ -24,13 +24,21 @@ var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&for
 var requestTimeoutInMs = 3000;
 var requestCallbackName = "requestCallback";
 
+var searchTermInputElement = null;
+var contentDivElement = null;
+var viewLinkElem = null;
+var editLinkElement = null;
+var articleTitleElement = null;
+var licenseIconElement = null;
+var infoIconElement = null;
+
 function random() {
-	document.getElementById('search-term').value = '';
+	searchTermInputElement.value = "";
 	apiRequest(apiExtractsQuery + "&generator=random&grnnamespace=0");
 }
 
 function search() {
-	var searchTerm = document.getElementById('search-term').value;
+	var searchTerm = searchTermInputElement.value;
 	if(searchTerm)
 		apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm);
 	else random();
@@ -38,8 +46,7 @@ function search() {
 
 function apiRequest(queryString) {
 	// Show animated loading spinner -- from https://commons.wikimedia.org/wiki/File:Chromiumthrobber.svg
-	var mainContainer = document.getElementById("content");
-	mainContainer.innerHTML = "<img src='img/loading.svg' alt='Loading...' id='loading-spinner'/>";
+	contentDivElement.innerHTML = "<img src='img/loading.svg' alt='Loading...' id='loading-spinner'/>";
 
 	var script = document.createElement("script");
 	script.type = "text/javascript";
@@ -91,37 +98,31 @@ function renderSearchResult(jsonObject) {
 	article.url = "https://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
 	var editlink = article.url + "?action=edit&amp;section=0";
 
-	var viewLinkElem = document.getElementById("viewlink");
-
 	viewLinkElem.textContent = article.title;
 	viewLinkElem.setAttribute("href", article.url);
 
-	document.getElementById("editlink").setAttribute("href", editlink);
-	toggleVisibility(document.getElementById("article-title"), true);
+	editLinkElement.setAttribute("href", editlink);
+	toggleVisibility(articleTitleElement, true);
 
-	var contentNode = document.getElementById("content");
+	contentDivElement = clearNode(contentDivElement);
+	contentDivElement.innerHTML = article.extract;
 
-	contentNode = clearNode(contentNode);
-	contentNode.innerHTML = article.extract;
-
-	toggleVisibility(document.getElementById("license-icon"), true);
-	toggleVisibility(document.getElementById("info-icon"), true);
+	toggleVisibility(licenseIconElement, true);
+	toggleVisibility(infoIconElement, true);
 }
 
 function renderNotFoundNode() {
-	toggleVisibility(document.getElementById("article-title"), false);
-	toggleVisibility(document.getElementById("license-icon"), false);
-	toggleVisibility(document.getElementById("info-icon"), false);
+	toggleVisibility(articleTitleElement, false);
+	toggleVisibility(licenseIconElement, false);
+	toggleVisibility(infoIconElement, false);
 
 	var notFoundNode = document.createElement("div");
 	notFoundNode.classList.add("error");
 	notFoundNode.textContent = "The search term wasn't found.";
 
-	var contentNode = document.getElementById("content");
+	contentDivElement = clearNode(contentDivElement);
 
-	contentNode = clearNode(contentNode);
-
-	contentNode.appendChild(notFoundNode);
+	contentDivElement.appendChild(notFoundNode);
 }
 
 function handleRequestResult(jsonObject) {
@@ -162,10 +163,18 @@ function getQueryVariable(parameter) {
 
 // Upon loading the page, check if an URL parameter was passed, and use it to perform a search
 window.onload = function () {
+	searchTermInputElement = document.getElementById("search-term");
+	contentDivElement = document.getElementById("content");
+	viewLinkElem = document.getElementById("viewlink");
+	editLinkElement = document.getElementById("editlink");
+	articleTitleElement = document.getElementById("article-title");
+	licenseIconElement = document.getElementById("license-icon");
+	infoIconElement = document.getElementById("info-icon");
+
 	var queryParam = getQueryVariable("search");
 
 	if(queryParam !== null) {
-		document.getElementById('search-term').value = queryParam;
+		searchTermInputElement.value = queryParam;
 		search();
 	}
 }
