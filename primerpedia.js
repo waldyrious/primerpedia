@@ -37,9 +37,9 @@ function search() {
 }
 
 function apiRequest(queryString) {
-	// Show animated loading spinner -- from https://www.ajaxload.info
+	// Show animated loading spinner -- from https://commons.wikimedia.org/wiki/File:Chromiumthrobber.svg
 	var mainContainer = document.getElementById("content");
-	mainContainer.innerHTML = "<img src='img/loading.gif' alt='Loading...' style='margin:1em 50%' />";
+	mainContainer.innerHTML = "<img src='img/loading.svg' alt='Loading...' style='margin:1em auto; width:4em; display: block'/>";
 
 	var script = document.createElement("script");
 	script.type = "text/javascript";
