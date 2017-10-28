@@ -40,6 +40,12 @@ form input {
 	box-sizing: padding-box; /* harmonize box model of text input and buttons */
 }
 
+#loading-spinner {
+	display: block;
+	margin: 2.5em auto;
+	width: 4em;
+}
+
 a {
 	color: DodgerBlue;
 	font-family: sans-serif;
