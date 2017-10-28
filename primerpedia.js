@@ -25,6 +25,7 @@ var requestTimeoutInMs = 3000;
 var requestCallbackName = "requestCallback";
 
 function random() {
+	document.getElementById('search-term').value = '';
 	apiRequest(apiExtractsQuery + "&generator=random&grnnamespace=0");
 }
 
