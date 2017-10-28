@@ -124,12 +124,47 @@ function renderNotFoundNode() {
 	contentNode.appendChild(notFoundNode);
 }
 
+function isHistoryStateSet() {
+	if(history.state === undefined) {
+		return false;
+	}
+
+	if(history.state === null) {
+		return false;
+	}
+
+	if(!history.state.hasOwnProperty("search")) {
+		return false;
+	}
+
+	return true;
+}
+
+function addToBrowserHistory(jsonObject) {
+	// pretty WET, probably best to make a DTO from the request
+	var pageid = jsonObject.query.pageids[0];
+	var article = jsonObject.query.pages[pageid];
+	var search = encodeURIComponent(article.title);
+
+	var historyState = {
+		search: search
+	};
+
+	if(isHistoryStateSet() && history.state.search === search) {
+		//Current page is already in history
+		return;
+	}
+
+	history.pushState(historyState, window.title, window.location.pathname + "?search=" + search);
+}
+
 function handleRequestResult(jsonObject) {
 	if(jsonObject.hasOwnProperty("query")) {
 		var searchData = jsonObject.query.searchinfo;
 
 		if(typeof searchData === "undefined" || searchData.totalhits > 0) {
 			renderSearchResult(jsonObject);
+			addToBrowserHistory(jsonObject);
 
 			return;
 		} else if(typeof searchData.suggestion !== "undefined") {
@@ -168,4 +203,27 @@ window.onload = function () {
 		document.getElementById('search-term').value = queryParam;
 		search();
 	}
-}
+
+	if(!isHistoryStateSet()) {
+		// just for convenience
+		history.replaceState({
+			search: queryParam
+		}, window.title, window.location.href);
+	}
+};
+
+window.onpopstate = function () {
+	if(isHistoryStateSet()) {
+		if(history.state.search === null) {
+			// we can't search for nothing so we reload the base location
+			window.location.assign(window.location.href);
+			return;
+		}
+
+		// needs to be done to comform to the requirements of search()
+		var queryParam = decodeURIComponent(history.state.search);
+
+		document.getElementById("search-term").value = queryParam;
+		search();
+	}
+};
