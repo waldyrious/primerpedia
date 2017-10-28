@@ -5,7 +5,7 @@
  *    (either to get a random page, or to resolve a search term)
  *    btw, this action seems to have a mobileformat= parameter, but the resuts are poor.
  * 2) Another option is to use the prop=revisions query, coupled with rvprop=content,
- *    &rvsection=0 and rvparse=true (see http://stackoverflow.com/q/13517901/266309).
+ *    &rvsection=0 and rvparse=true (see https://stackoverflow.com/q/13517901/266309).
  *    This request can be combined with a random article generator,
  *    using generator=random&grnnamespace=0,
  *    or with a search generator, using generator=search.
@@ -18,7 +18,7 @@
  *    and some templates are still displayed, so they need to be hidden via css.
  */
 
-var apiUrl = "http://en.wikipedia.org/w/api.php?";
+var apiUrl = "https://en.wikipedia.org/w/api.php?";
 // https://www.mediawiki.org/wiki/Extension:MobileFrontend#prop.3Dextracts
 var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
 var requestTimeoutInMs = 3000;
@@ -37,7 +37,7 @@ function search() {
 }
 
 function apiRequest(queryString) {
-	// Show animated loading spinner -- from http://www.ajaxload.info
+	// Show animated loading spinner -- from https://www.ajaxload.info
 	var mainContainer = document.getElementById("content");
 	mainContainer.innerHTML = "<img src='img/loading.gif' alt='Loading...' style='margin:1em 50%' />";
 
@@ -88,7 +88,7 @@ function clearNode(node) {
 function renderSearchResult(jsonObject) {
 	var pageid = jsonObject.query.pageids[0];
 	var article = jsonObject.query.pages[pageid];
-	article.url = "http://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
+	article.url = "https://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
 	var editlink = article.url + "?action=edit&amp;section=0";
 
 	var viewLinkElem = document.getElementById("viewlink");
@@ -143,7 +143,7 @@ function handleRequestResult(jsonObject) {
 }
 
 // Get query string from URL parameter
-// http://stackoverflow.com/a/2091331/266309
+// https://stackoverflow.com/a/2091331/266309
 function getQueryVariable(parameter) {
 	// Get query string, excluding the first character, '?'
 	var query = window.location.search.substring(1);
