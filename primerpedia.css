@@ -4,7 +4,7 @@ html {
 
 body {
 	min-width: 280px;
-	line-height: 1.5 !important; /* TODO: remove !important when #27 is fixed. */
+	line-height: 1.5;
 }
 
 body, h2, .error {
@@ -119,5 +119,7 @@ object {
 }
 
 @media (min-width: 600px) {
-    html { font-size: calc(0.4vw + (13.6px * 1.45)); }
+    html {
+        font-size: calc(0.4vw + (13.6px * 1.45));
+    }
 }
