@@ -37,66 +37,66 @@ var copyShareLinkInputElement = null;
 var copyInputContainer = null;
 
 function random() {
-	searchTermInputElement.value = "";
-	apiRequest(apiExtractsQuery + "&generator=random&grnnamespace=0");
+    searchTermInputElement.value = "";
+    apiRequest(apiExtractsQuery + "&generator=random&grnnamespace=0");
 }
 
 function search() {
-	updateSearchButtonEnabledState();
+    updateSearchButtonEnabledState();
 
-	var searchTerm = searchTermInputElement.value;
+    var searchTerm = searchTermInputElement.value;
 
-	if(typeof searchTerm === "string" && searchTerm.length > 0) {
-		apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm.replace(/ /g, '_'));
-	}
+    if(typeof searchTerm === "string" && searchTerm.length > 0) {
+        apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm.replace(/ /g, '_'));
+    }
 }
 
 function apiRequest(queryString) {
-	// Show animated loading spinner -- from https://commons.wikimedia.org/wiki/File:Chromiumthrobber.svg
-	contentDivElement.innerHTML = "<img src='img/loading.svg' alt='Loading...' id='loading-spinner'/>";
+    // Show animated loading spinner -- from https://commons.wikimedia.org/wiki/File:Chromiumthrobber.svg
+    contentDivElement.innerHTML = "<img src='img/loading.svg' alt='Loading...' id='loading-spinner'/>";
 
-	var script = document.createElement("script");
-	script.type = "text/javascript";
-	script.async = true;
-	script.src = apiUrl + queryString + "&callback=" + requestCallbackName;
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.async = true;
+    script.src = apiUrl + queryString + "&callback=" + requestCallbackName;
 
-	document.getElementsByTagName("head")[0].appendChild(script);
+    document.getElementsByTagName("head")[0].appendChild(script);
 
-	var onCompleted = function () {
-		// reduce global namespace pollution
-		delete (window[requestCallbackName]);
-		// remove jsonp result tag
-		script.remove();
-	}
+    var onCompleted = function () {
+        // reduce global namespace pollution
+        delete (window[requestCallbackName]);
+        // remove jsonp result tag
+        script.remove();
+    }
 
-	var requestTimeout = window.setTimeout(function () {
-		onCompleted();
-	}, requestTimeoutInMs);
+    var requestTimeout = window.setTimeout(function () {
+        onCompleted();
+    }, requestTimeoutInMs);
 
-	window[requestCallbackName] = function (jsonObject) {
-		window.clearTimeout(requestTimeout);
+    window[requestCallbackName] = function (jsonObject) {
+        window.clearTimeout(requestTimeout);
 
-		handleRequestResult(jsonObject);
+        handleRequestResult(jsonObject);
 
-		onCompleted();
-	}
+        onCompleted();
+    }
 }
 
 function toggleVisibility(element, visibility) {
-	if(element instanceof HTMLElement) {
-		if(!visibility) {
-			element.style.setProperty("display", "none");
-		} else {
-			element.style.removeProperty("display");
-		}
-	}
+    if(element instanceof HTMLElement) {
+        if(!visibility) {
+            element.style.setProperty("display", "none");
+        } else {
+            element.style.removeProperty("display");
+        }
+    }
 }
 
 function clearNode(node) {
-	var clone = node.cloneNode(false);
-	node.parentNode.replaceChild(clone, node);
+    var clone = node.cloneNode(false);
+    node.parentNode.replaceChild(clone, node);
 
-	return clone;
+    return clone;
 }
 
 function getShareableLink(search) {
@@ -104,93 +104,93 @@ function getShareableLink(search) {
 }
 
 function renderSearchResult(jsonObject) {
-	var pageid = jsonObject.query.pageids[0];
-	var article = jsonObject.query.pages[pageid];
-	var encodedArticleTitle = encodeURIComponent(article.title).replace(/%20/g, '_');
-	article.url = "https://en.wikipedia.org/wiki/" + encodedArticleTitle;
-	var editlink = article.url + "?action=edit&amp;section=0";
-	var shareLink = window.location.href;
+    var pageid = jsonObject.query.pageids[0];
+    var article = jsonObject.query.pages[pageid];
+    var encodedArticleTitle = encodeURIComponent(article.title).replace(/%20/g, '_');
+    article.url = "https://en.wikipedia.org/wiki/" + encodedArticleTitle;
+    var editlink = article.url + "?action=edit&amp;section=0";
+    var shareLink = window.location.href;
 
-	viewLinkElem.textContent = article.title;
-	viewLinkElem.setAttribute("href", article.url);
+    viewLinkElem.textContent = article.title;
+    viewLinkElem.setAttribute("href", article.url);
 
-	editLinkElement.setAttribute("href", editlink);
-	toggleVisibility(articleTitleElement, true);
+    editLinkElement.setAttribute("href", editlink);
+    toggleVisibility(articleTitleElement, true);
 
-	copyShareLinkInputElement.value = getShareableLink(encodedArticleTitle);
+    copyShareLinkInputElement.value = getShareableLink(encodedArticleTitle);
 
-	contentDivElement = clearNode(contentDivElement);
-	contentDivElement.innerHTML = article.extract;
+    contentDivElement = clearNode(contentDivElement);
+    contentDivElement.innerHTML = article.extract;
 
-	toggleVisibility(licenseIconElement, true);
-	toggleVisibility(infoIconElement, true);
+    toggleVisibility(licenseIconElement, true);
+    toggleVisibility(infoIconElement, true);
 }
 
 function renderNotFoundNode() {
-	toggleVisibility(articleTitleElement, false);
-	toggleVisibility(licenseIconElement, false);
-	toggleVisibility(infoIconElement, false);
+    toggleVisibility(articleTitleElement, false);
+    toggleVisibility(licenseIconElement, false);
+    toggleVisibility(infoIconElement, false);
 
-	var notFoundNode = document.createElement("div");
-	notFoundNode.classList.add("error");
-	notFoundNode.textContent = "The search term wasn't found.";
+    var notFoundNode = document.createElement("div");
+    notFoundNode.classList.add("error");
+    notFoundNode.textContent = "The search term wasn't found.";
 
-	contentDivElement = clearNode(contentDivElement);
+    contentDivElement = clearNode(contentDivElement);
 
-	contentDivElement.appendChild(notFoundNode);
+    contentDivElement.appendChild(notFoundNode);
 }
 
 function isHistoryStateSet() {
-	if(history.state === undefined) {
-		return false;
-	}
+    if(history.state === undefined) {
+        return false;
+    }
 
-	if(history.state === null) {
-		return false;
-	}
+    if(history.state === null) {
+        return false;
+    }
 
-	if(!history.state.hasOwnProperty("search")) {
-		return false;
-	}
+    if(!history.state.hasOwnProperty("search")) {
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
 function addToBrowserHistory(jsonObject) {
-	// pretty WET, probably best to make a DTO from the request
-	var pageid = jsonObject.query.pageids[0];
-	var article = jsonObject.query.pages[pageid];
-	var search = encodeURIComponent(article.title).replace(/%20/g, '_');
+    // pretty WET, probably best to make a DTO from the request
+    var pageid = jsonObject.query.pageids[0];
+    var article = jsonObject.query.pages[pageid];
+    var search = encodeURIComponent(article.title).replace(/%20/g, '_');
 
-	var historyState = {
-		search: search
-	};
+    var historyState = {
+        search: search
+    };
 
-	if(isHistoryStateSet() && history.state.search === search) {
-		//Current page is already in history
-		return;
-	}
+    if(isHistoryStateSet() && history.state.search === search) {
+        //Current page is already in history
+        return;
+    }
 
-	history.pushState(historyState, window.title, getShareableLink(search));
+    history.pushState(historyState, window.title, getShareableLink(search));
 }
 
 function handleRequestResult(jsonObject) {
-	if(jsonObject.hasOwnProperty("query")) {
-		var searchData = jsonObject.query.searchinfo;
+    if(jsonObject.hasOwnProperty("query")) {
+        var searchData = jsonObject.query.searchinfo;
 
-		if(typeof searchData === "undefined" || searchData.totalhits > 0) {
-			renderSearchResult(jsonObject);
-			addToBrowserHistory(jsonObject);
+        if(typeof searchData === "undefined" || searchData.totalhits > 0) {
+            renderSearchResult(jsonObject);
+            addToBrowserHistory(jsonObject);
 
-			return;
-		} else if(typeof searchData.suggestion !== "undefined") {
-			apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion);
+            return;
+        } else if(typeof searchData.suggestion !== "undefined") {
+            apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion);
 
-			return;
-		}
-	}
+            return;
+        }
+    }
 
-	renderNotFoundNode();
+    renderNotFoundNode();
 }
 
 /**
@@ -201,19 +201,19 @@ function handleRequestResult(jsonObject) {
  * @returns {string|null} - Decoded query parameter or null
  */
 function getQueryVariable(parameter) {
-	// Get query string, excluding the first character, '?'
-	var query = window.location.search.substring(1);
-	// Split each parameter=value pair using '&' as separator
-	var vars = query.split("&");
-	// Loop over all the parameter=value pairs, and split them into their parameter/value components
-	for(var i = 0; i < vars.length; i++) {
-		var pair = vars[i].split("=");
-		// If one of the parameter names is the one we're looking for, return its value
-		if(decodeURIComponent(pair[0]) == parameter) {
-			return decodeURIComponent(pair[1]);
-		}
-	}
-	return null;
+    // Get query string, excluding the first character, '?'
+    var query = window.location.search.substring(1);
+    // Split each parameter=value pair using '&' as separator
+    var vars = query.split("&");
+    // Loop over all the parameter=value pairs, and split them into their parameter/value components
+    for(var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        // If one of the parameter names is the one we're looking for, return its value
+        if(decodeURIComponent(pair[0]) == parameter) {
+            return decodeURIComponent(pair[1]);
+        }
+    }
+    return null;
 }
 
 function updateSearchButtonEnabledState() {
@@ -230,74 +230,74 @@ function updateSearchButtonEnabledState() {
 
 // Upon loading the page, check if an URL parameter was passed, and use it to perform a search
 window.onload = function () {
-	searchTermInputElement = document.getElementById("search-term");
-	searchButton = document.getElementById("searchButton");
-	contentDivElement = document.getElementById("content");
-	viewLinkElem = document.getElementById("viewlink");
-	editLinkElement = document.getElementById("editlink");
-	copyShareLinkElement = document.getElementById("copysharelink");
-	articleTitleElement = document.getElementById("article-title");
-	licenseIconElement = document.getElementById("license-icon");
-	infoIconElement = document.getElementById("info-icon");
-	copyShareLinkInputElement = document.getElementById("copyShareLinkInput");
-	copyInputContainer = document.getElementById("copyInputContainer");
+    searchTermInputElement = document.getElementById("search-term");
+    searchButton = document.getElementById("searchButton");
+    contentDivElement = document.getElementById("content");
+    viewLinkElem = document.getElementById("viewlink");
+    editLinkElement = document.getElementById("editlink");
+    copyShareLinkElement = document.getElementById("copysharelink");
+    articleTitleElement = document.getElementById("article-title");
+    licenseIconElement = document.getElementById("license-icon");
+    infoIconElement = document.getElementById("info-icon");
+    copyShareLinkInputElement = document.getElementById("copyShareLinkInput");
+    copyInputContainer = document.getElementById("copyInputContainer");
 
-	var queryParam = getQueryVariable("search");
+    var queryParam = getQueryVariable("search");
 
-	if(queryParam !== null) {
-		searchTermInputElement.value = queryParam.replace(/_/g, ' ');
-		search();
-	}
+    if(queryParam !== null) {
+        searchTermInputElement.value = queryParam.replace(/_/g, ' ');
+        search();
+    }
 
-	if(!isHistoryStateSet()) {
-		// just for convenience
-		history.replaceState({
-			search: queryParam
-		}, window.title, window.location.href);
-	}
+    if(!isHistoryStateSet()) {
+        // just for convenience
+        history.replaceState({
+            search: queryParam
+        }, window.title, window.location.href);
+    }
 
-	searchTermInputElement.addEventListener("keyup", function () {
-		updateSearchButtonEnabledState();
-	});
+    searchTermInputElement.addEventListener("keyup", function () {
+        updateSearchButtonEnabledState();
+    });
 
-	searchTermInputElement.addEventListener("blur", function () {
-		updateSearchButtonEnabledState();
-	});
+    searchTermInputElement.addEventListener("blur", function () {
+        updateSearchButtonEnabledState();
+    });
 
-	copyShareLinkElement.addEventListener("click", function () {
-		// this should allways be true, but doesn't hurt to check
-		if(copyShareLinkInputElement instanceof HTMLInputElement) {
-			// some browsers require a visible source for selection & copy to work
-			// this container virtually stays invisible
-			// since we hide it again as soon as we are done executing the copy instruction
-			toggleVisibility(copyInputContainer, true);
+    copyShareLinkElement.addEventListener("click", function () {
+        // this should allways be true, but doesn't hurt to check
+        if(copyShareLinkInputElement instanceof HTMLInputElement) {
+            // some browsers require a visible source for selection & copy to work
+            // this container virtually stays invisible
+            // since we hide it again as soon as we are done executing the copy instruction
+            toggleVisibility(copyInputContainer, true);
 
-			// clipboard interaction is a dodgy thing
-			// this should prevent the worst things where browser support
-			// or permissions are missing
-			try {
-				copyShareLinkInputElement.select(); // select the contents of the input
-				document.execCommand("copy"); // copy the selection into the clipboard
-			} catch(e) {
-			}
+            // clipboard interaction is a dodgy thing
+            // this should prevent the worst things where browser support
+            // or permissions are missing
+            try {
+                copyShareLinkInputElement.select(); // select the contents of the input
+                document.execCommand("copy"); // copy the selection into the clipboard
+            } catch(e) {
+            }
 
-			toggleVisibility(copyInputContainer, false);
-		}
-	});
+            toggleVisibility(copyInputContainer, false);
+        }
+    });
 };
 
 window.onpopstate = function () {
-	if(isHistoryStateSet()) {
-		if(history.state.search === null) {
-			// we can't search for nothing so we reload the base location
-			window.location.assign(window.location.href);
-			return;
-		}
+    if(isHistoryStateSet()) {
+        if(history.state.search === null) {
+            // we can't search for nothing so we reload the base location
+            window.location.assign(window.location.href);
+            return;
+        }
 
-		// needs to be done to comform to the requirements of search()
-		var queryParam = decodeURIComponent(history.state.search);
+        // needs to be done to comform to the requirements of search()
+        var queryParam = decodeURIComponent(history.state.search);
 
-		searchTermInputElement.value = queryParam;
-		search();
-	}
+        searchTermInputElement.value = queryParam;
+        search();
+    }
 };
