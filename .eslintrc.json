@@ -18,7 +18,7 @@
 		"eol-last": "warn",
 		"indent": [
 			"warn",
-			"tab"
+			4
 		]
 	}
 }
