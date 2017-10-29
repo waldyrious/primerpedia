@@ -24,7 +24,7 @@ var requestCallbackName = "requestCallback";
 var notificationTimeoutInMs = 3000;
 var notificationTimeout = null;
 
-var apiUrl = wikipediaUrl + "/w/api.php?";
+var apiUrl = wikipediaUrl + "/w/api.php";
 
 var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
 var editIntroQuery = "?action=edit&amp;section=0";
@@ -61,14 +61,23 @@ function search() {
     }
 }
 
+/**
+ * Execute a JSONP Request
+ * @param {string} queryString
+ */
 function apiRequest(queryString) {
+
+    if(typeof queryString !== "string" || queryString.length <= 0) {
+        throw new Error("apiRequest requires a non-empty string parameter.");
+    }
+
     // Show animated loading spinner -- from https://commons.wikimedia.org/wiki/File:Chromiumthrobber.svg
     contentDivElement.innerHTML = "<img src='img/loading.svg' alt='Loading...' id='loading-spinner'/>";
 
     var script = document.createElement("script");
     script.type = "text/javascript";
     script.async = true;
-    script.src = apiUrl + queryString + "&callback=" + requestCallbackName;
+    script.src = apiUrl + "?" + queryString + "&callback=" + requestCallbackName;
 
     document.getElementsByTagName("head")[0].appendChild(script);
 
