@@ -61,6 +61,11 @@ function search() {
     }
 }
 
+function renderLoadingSpinner() {
+    // Show animated loading spinner -- from https://commons.wikimedia.org/wiki/File:Chromiumthrobber.svg
+    contentDivElement.innerHTML = "<img src='img/loading.svg' alt='Loading...' id='loading-spinner'/>";
+}
+
 /**
  * Execute a JSONP Request
  * @param {string} queryString
@@ -71,8 +76,7 @@ function apiRequest(queryString) {
         throw new Error("apiRequest requires a non-empty string parameter.");
     }
 
-    // Show animated loading spinner -- from https://commons.wikimedia.org/wiki/File:Chromiumthrobber.svg
-    contentDivElement.innerHTML = "<img src='img/loading.svg' alt='Loading...' id='loading-spinner'/>";
+    renderLoadingSpinner();
 
     var script = document.createElement("script");
     script.type = "text/javascript";
