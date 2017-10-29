@@ -1,4 +1,7 @@
-/* There are 3 ways (that I know about) of getting the first section of an article.
+/**
+ * @file Primerpedia Script Entry Point
+ *
+ * There are 3 ways (that I know about) of getting the first section of an article.
  * 1) We can use action=parse coupled with the section=0 parameter,
  *    but the "page" parameter needs to be supplied,
  *    which means that we'd have to make two API requests
@@ -105,23 +108,6 @@ function apiRequest(queryString) {
     }
 }
 
-function toggleVisibility(element, visibility) {
-    if(element instanceof HTMLElement) {
-        if(!visibility) {
-            element.style.setProperty("display", "none");
-        } else {
-            element.style.removeProperty("display");
-        }
-    }
-}
-
-function clearNode(node) {
-    var clone = node.cloneNode(false);
-    node.parentNode.replaceChild(clone, node);
-
-    return clone;
-}
-
 function getShareableLink(search) {
     return window.location.pathname + "?search=" + search;
 }
@@ -214,29 +200,6 @@ function handleRequestResult(jsonObject) {
     }
 
     renderNotFoundNode();
-}
-
-/**
- * Get query string from URL parameter
- *
- * @see [origin on stackoverflow]{@link https://stackoverflow.com/a/2091331/266309}
- * @param {string} parameter - Name of the query parameter to retrieve
- * @returns {string|null} - Decoded query parameter or null
- */
-function getQueryVariable(parameter) {
-    // Get query string, excluding the first character, "?"
-    var query = window.location.search.substring(1);
-    // Split each parameter=value pair using "&" as separator
-    var vars = query.split("&");
-    // Loop over all the parameter=value pairs, and split them into their parameter/value components
-    for(var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split("=");
-        // If one of the parameter names is the one we're looking for, return its value
-        if(decodeURIComponent(pair[0]) == parameter) {
-            return decodeURIComponent(pair[1]);
-        }
-    }
-    return null;
 }
 
 function updateSearchButtonEnabledState() {
