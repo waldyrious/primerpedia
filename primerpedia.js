@@ -19,12 +19,18 @@
  */
 
 var wikipediaUrl = "https://en.wikipedia.org";
-var apiUrl = wikipediaUrl + "/w/api.php?";
-var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
 var requestTimeoutInMs = 3000;
 var requestCallbackName = "requestCallback";
 var notificationTimeoutInMs = 3000;
 var notificationTimeout = null;
+
+var apiUrl = wikipediaUrl + "/w/api.php?";
+
+var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
+var editIntroQuery = "?action=edit&amp;section=0";
+
+var searchQuery = "&generator=search&gsrlimit=1&gsrsearch=";
+var randomArticleQuery = "&generator=random&grnnamespace=0";
 
 var notificationElement = null;
 var notificationContentElement = null;
@@ -42,7 +48,7 @@ var copyInputContainer = null;
 
 function random() {
     searchTermInputElement.value = "";
-    apiRequest(apiExtractsQuery + "&generator=random&grnnamespace=0");
+    apiRequest(apiExtractsQuery + randomArticleQuery);
 }
 
 function search() {
@@ -51,7 +57,7 @@ function search() {
     var searchTerm = searchTermInputElement.value;
 
     if(typeof searchTerm === "string" && searchTerm.length > 0) {
-        apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm.replace(/ /g, "_"));
+        apiRequest(apiExtractsQuery + searchQuery + searchTerm.replace(/ /g, "_"));
     }
 }
 
@@ -112,7 +118,7 @@ function renderSearchResult(jsonObject) {
     var article = jsonObject.query.pages[pageid];
     var encodedArticleTitle = encodeURIComponent(article.title).replace(/%20/g, "_");
     article.url = wikipediaUrl + "/wiki/" + encodedArticleTitle;
-    var editlink = article.url + "?action=edit&amp;section=0";
+    var editlink = article.url + editIntroQuery;
     var shareLink = window.location.href;
 
     viewLinkElem.textContent = article.title;
@@ -188,7 +194,7 @@ function handleRequestResult(jsonObject) {
 
             return;
         } else if(typeof searchData.suggestion !== "undefined") {
-            apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion);
+            apiRequest(apiExtractsQuery + searchQuery + searchData.suggestion);
 
             return;
         }
