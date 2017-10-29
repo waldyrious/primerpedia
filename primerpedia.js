@@ -18,8 +18,8 @@
  *    and some templates are still displayed, so they need to be hidden via css.
  */
 
-var apiUrl = "https://en.wikipedia.org/w/api.php?";
-// https://www.mediawiki.org/wiki/Extension:MobileFrontend#prop.3Dextracts
+var wikipediaUrl = "https://en.wikipedia.org";
+var apiUrl = wikipediaUrl + "/w/api.php?";
 var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
 var requestTimeoutInMs = 3000;
 var requestCallbackName = "requestCallback";
@@ -111,7 +111,7 @@ function renderSearchResult(jsonObject) {
     var pageid = jsonObject.query.pageids[0];
     var article = jsonObject.query.pages[pageid];
     var encodedArticleTitle = encodeURIComponent(article.title).replace(/%20/g, "_");
-    article.url = "https://en.wikipedia.org/wiki/" + encodedArticleTitle;
+    article.url = wikipediaUrl + "/wiki/" + encodedArticleTitle;
     var editlink = article.url + "?action=edit&amp;section=0";
     var shareLink = window.location.href;
 
