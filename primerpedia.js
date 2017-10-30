@@ -47,7 +47,7 @@ function search() {
 	var searchTerm = searchTermInputElement.value;
 
 	if(typeof searchTerm === "string" && searchTerm.length > 0) {
-		apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm);
+		apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm.replace(/ /g, '_'));
 	}
 }
 
@@ -106,7 +106,7 @@ function getShareableLink(search) {
 function renderSearchResult(jsonObject) {
 	var pageid = jsonObject.query.pageids[0];
 	var article = jsonObject.query.pages[pageid];
-	var encodedArticleTitle = encodeURIComponent(article.title);
+	var encodedArticleTitle = encodeURIComponent(article.title).replace(/%20/g, '_');
 	article.url = "https://en.wikipedia.org/wiki/" + encodedArticleTitle;
 	var editlink = article.url + "?action=edit&amp;section=0";
 	var shareLink = window.location.href;
@@ -160,7 +160,7 @@ function addToBrowserHistory(jsonObject) {
 	// pretty WET, probably best to make a DTO from the request
 	var pageid = jsonObject.query.pageids[0];
 	var article = jsonObject.query.pages[pageid];
-	var search = encodeURIComponent(article.title);
+	var search = encodeURIComponent(article.title).replace(/%20/g, '_');
 
 	var historyState = {
 		search: search
@@ -240,7 +240,7 @@ window.onload = function () {
 	var queryParam = getQueryVariable("search");
 
 	if(queryParam !== null) {
-		searchTermInputElement.value = queryParam;
+		searchTermInputElement.value = queryParam.replace(/_/g, ' ');
 		search();
 	}
 
