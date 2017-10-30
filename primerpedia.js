@@ -292,7 +292,7 @@ window.onpopstate = function () {
 		// needs to be done to comform to the requirements of search()
 		var queryParam = decodeURIComponent(history.state.search);
 
-		document.getElementById("search-term").value = queryParam;
+		searchTermInputElement.value = queryParam;
 		search();
 	}
 };
