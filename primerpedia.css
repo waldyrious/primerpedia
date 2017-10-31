@@ -120,6 +120,6 @@ object {
 
 @media (min-width: 600px) {
     html {
-        font-size: calc(0.4vw + (13.6px * 1.45));
+        font-size: calc(13px + 0.5vw);
     }
 }
