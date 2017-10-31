@@ -96,6 +96,10 @@ function clearNode(node) {
 	return clone;
 }
 
+function getShareableLink(search) {
+	return window.location.pathname + "?search=" + search;
+}
+
 function renderSearchResult(jsonObject) {
 	var pageid = jsonObject.query.pageids[0];
 	var article = jsonObject.query.pages[pageid];
@@ -160,7 +164,7 @@ function addToBrowserHistory(jsonObject) {
 		return;
 	}
 
-	history.pushState(historyState, window.title, window.location.pathname + "?search=" + search);
+	history.pushState(historyState, window.title, getShareableLink(search));
 }
 
 function handleRequestResult(jsonObject) {
