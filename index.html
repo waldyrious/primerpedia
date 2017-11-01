@@ -1,65 +1,68 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<title>Primerpedia</title>
-		<meta name="description" content="A proof of concept for the Concise Wikipedia proposal" />
-		<meta name="viewport" content="width=device-width" />
-		<!-- Icon source: https://commons.wikimedia.org/wiki/Category:Wikipedia_favicons -->
-		<link rel="icon" type="image/png" href="img/favicon.png" />
-		<link href="https://fonts.googleapis.com/css?family=Squada+One" rel="stylesheet" />
-		<link href="primerpedia.css" rel="stylesheet" />
-	</head>
-	<body>
-		<h1><a href="index.html">Primerpedia</a></h1>
-		<div id="controls">
-			<form onsubmit="search(); return false;">
-				<input type="search" autocomplete="off" id="search-term" placeholder="Search..." autofocus="" />
-				<input id="searchButton" type="submit" value="Search" disabled="disabled"/>
-				<input type="button" value="Load random" onclick="random();" />
-			</form>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Primerpedia</title>
+	<meta name="description" content="A proof of concept for the Concise Wikipedia proposal" />
+	<meta name="viewport" content="width=device-width" />
+	<!-- Icon source: https://commons.wikimedia.org/wiki/Category:Wikipedia_favicons -->
+	<link rel="icon" type="image/png" href="img/favicon.png" />
+	<link href="https://fonts.googleapis.com/css?family=Squada+One" rel="stylesheet" />
+	<link href="primerpedia.css" rel="stylesheet" />
+</head>
+
+<body>
+	<h1><a href="index.html">Primerpedia</a></h1>
+	<div id="controls">
+		<form onsubmit="search(); return false;">
+			<input type="search" autocomplete="off" id="search-term" placeholder="Search..." autofocus="" />
+			<input id="searchButton" type="submit" value="Search" disabled="disabled"/>
+			<input type="button" value="Load random" onclick="random();" />
+		</form>
+	</div>
+	<h2 id="article-title" style="display:none">
+		<a id="viewlink" href=""></a>
+		<div class="actionlink-container">
+			<a id="copysharelink" class="actionlink" title="copy share URL">&#128203;</a>
+			<a id="editlink" class="actionlink" href="" title="improve this!">✎</a>
 		</div>
-		<h2 id="article-title" style="display:none">
-			<a id="viewlink" href=""></a>
-			<div class="actionlink-container">
-				<a id="copysharelink" class="actionlink" title="copy share URL">&#128203;</a>
-				<a id="editlink" class="actionlink" href="" title="improve this!">✎</a>
-			</div>
-		</h2>
-		<div id="content">
-			<p>Primerpedia is a proof-of-concept demo for the
-			<b><a href="https://meta.wikimedia.org/wiki/Concise_Wikipedia">Concise Wikipedia</a></b> proposal.
-			It provides short summaries of Wikipedia articles,
-			for when you just need a quick overview at the topic.</p>
-			<p>For more information, check the
-			<a href="https://github.com/waldyrious/primerpedia#primerpedia">README</a> file.</p>
-		</div>
-		<div id="footer">
-			<a href="https://creativecommons.org/licenses/by-sa/3.0/" style="display:none" id="license-icon"
-			   title="Content licensed under the Creative Commons Attribution-ShareAlike license">
-				<!-- Icon source: https://creativecommons.org/about/downloads -->
-				<object data="img/cc.svg">
-					<img src="img/cc.png" alt="information icon" />
-				</object>
-			</a>
-			<a href="https://github.com/waldyrious/primerpedia" id="github-icon"
-			   title="Source code on github">
-				<!-- Icon source: https://github.com/logos -->
-				<object data="img/github.svg">
-					<img src="img/github.png" alt="github icon" />
-				</object>
-			</a>
-			<a href="https://meta.wikimedia.org/wiki/Concise_Wikipedia" style="display:none" id="info-icon"
-			   title="Original proposal and discussion">
-				<!-- icon source: hand-made -->
-				<object data="img/info.svg">
-					<img src="img/info.png" alt="information icon" />
-				</object>
-			</a>
-		</div>
-		<div id="copyInputContainer" style="display: none">
-			<input id="copyShareLinkInput" type="text" />
-		</div>
-		<script src="primerpedia.js"></script>
-	</body>
+	</h2>
+	<div id="content">
+		<p>Primerpedia is a proof-of-concept demo for the
+		<b><a href="https://meta.wikimedia.org/wiki/Concise_Wikipedia">Concise Wikipedia</a></b> proposal.
+		It provides short summaries of Wikipedia articles,
+		for when you just need a quick overview at the topic.</p>
+		<p>For more information, check the
+		<a href="https://github.com/waldyrious/primerpedia#primerpedia">README</a> file.</p>
+	</div>
+	<div id="footer">
+		<a href="https://creativecommons.org/licenses/by-sa/3.0/" style="display:none" id="license-icon"
+			title="Content licensed under the Creative Commons Attribution-ShareAlike license">
+			<!-- Icon source: https://creativecommons.org/about/downloads -->
+			<object data="img/cc.svg">
+				<img src="img/cc.png" alt="information icon" />
+			</object>
+		</a>
+		<a href="https://github.com/waldyrious/primerpedia" id="github-icon"
+			title="Source code on github">
+			<!-- Icon source: https://github.com/logos -->
+			<object data="img/github.svg">
+				<img src="img/github.png" alt="github icon" />
+			</object>
+		</a>
+		<a href="https://meta.wikimedia.org/wiki/Concise_Wikipedia" style="display:none" id="info-icon"
+			title="Original proposal and discussion">
+			<!-- icon source: hand-made -->
+			<object data="img/info.svg">
+				<img src="img/info.png" alt="information icon" />
+			</object>
+		</a>
+	</div>
+	<div id="copyInputContainer" style="display: none">
+		<input id="copyShareLinkInput" type="text" />
+	</div>
+	<script src="primerpedia.js"></script>
+</body>
+
 </html>
