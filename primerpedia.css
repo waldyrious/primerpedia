@@ -1,6 +1,10 @@
+html {
+    font-size: 16px;
+}
+
 body {
 	min-width: 280px;
-	line-height: 1.5 !important; /* TODO: remove !important when #27 is fixed. */
+	line-height: 1.5;
 }
 
 body, h2, .error {
@@ -112,4 +116,10 @@ object {
 .error {
 	font-size: small;
 	color: gray;
+}
+
+@media (min-width: 600px) {
+    html {
+        font-size: calc(13px + 0.5vw);
+    }
 }
