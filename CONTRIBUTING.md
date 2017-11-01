@@ -1,6 +1,7 @@
 ## Contribution guidelines
 
-**Primerpedia** is a community project and welcomes contributions of any type: code, documentation, bug reports, etc.
+**Primerpedia** is a community project and welcomes contributions of any type and size:
+code, documentation, bug reports, etc. No improvement is too small!
 
 One of the main goals of the project is to remain simple, well documented
 and easy to experiment with directly in the browser, without setting up a server.
