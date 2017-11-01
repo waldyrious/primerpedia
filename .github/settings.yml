@@ -1,0 +1,20 @@
+# Editing this file changes the GitHub settings for this repository
+# using probot-settings: https://probot.github.io/apps/settings
+
+repository:
+  # See https://developer.github.com/v3/repos/#edit for all available settings.
+
+  # A short description of the repository that will show up on GitHub
+  description: Proof of concept for Concise Wikipedia proposal
+
+  # A URL with more information about the repository
+  homepage: https://waldyrious.github.io/primerpedia
+
+  # Updates the default branch for this repository.
+  default_branch: gh-pages
+
+collaborators:
+  # Any returning contributor (more than one PR merged) should be added to this list
+  # See https://github.com/waldyrious/primerpedia/graphs/contributors for top contributors overall
+
+  - username: Jan-Ka
