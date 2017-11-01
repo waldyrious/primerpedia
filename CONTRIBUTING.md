@@ -21,7 +21,10 @@ and easy to experiment with directly in the browser, without setting up a server
 - Pull requests should normally be merged using the
   [semi-linear workflow](http://www.bitsnbites.eu/a-tidy-linear-git-history/).
   This means rebasing the PR on top of the latest `gh-pages` branch, and merging with `--no-ff`.
-  If no commits have been made to `gh-pages` since the commits in the PR,
+  - Whenever a rebase is done, make sure to force-push the rebased branch first,
+    and only then the merge (or do the merge using the web UI),
+	otherwise GitHub won't be able to automatically detect the merge.
+  - If no commits have been made to `gh-pages` since the commits in the PR,
   then the "Merge" button of GitHub's web interface can be used to do this.
 
 - Returning contributors should be given collaborator status in the repository.
