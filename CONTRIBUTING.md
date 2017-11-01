@@ -34,5 +34,5 @@ and easy to experiment with directly in the browser, without setting up a server
 
 [ISC License]: https://github.com/waldyrious/primerpedia/blob/gh-pages/LICENSE.md
 [semantic linefeeds]: http://rhodesmill.org/brandon/2012/one-sentence-per-line/
-[semi-linear workflow](http://www.bitsnbites.eu/a-tidy-linear-git-history/).
+[semi-linear workflow]: http://www.bitsnbites.eu/a-tidy-linear-git-history/
 [settings.yml]: https://github.com/waldyrious/primerpedia/blob/gh-pages/.github/settings.yml
