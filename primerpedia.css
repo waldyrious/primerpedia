@@ -122,6 +122,10 @@ object {
 	color: gray;
 }
 
+a#copysharelink {
+	cursor: pointer;
+}
+
 @media (min-width: 600px) {
     html {
         font-size: calc(13px + 0.5vw);
