@@ -25,6 +25,7 @@ var requestTimeoutInMs = 3000;
 var requestCallbackName = "requestCallback";
 
 var searchTermInputElement = null;
+var searchButton = null;
 var contentDivElement = null;
 var viewLinkElem = null;
 var editLinkElement = null;
@@ -38,10 +39,13 @@ function random() {
 }
 
 function search() {
+	updateSearchButtonEnabledState();
+
 	var searchTerm = searchTermInputElement.value;
-	if(searchTerm)
+
+	if(typeof searchTerm === "string" && searchTerm.length > 0) {
 		apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm);
-	else random();
+	}
 }
 
 function apiRequest(queryString) {
@@ -196,9 +200,22 @@ function getQueryVariable(parameter) {
 	return null;
 }
 
+function updateSearchButtonEnabledState() {
+	if(searchTermInputElement instanceof HTMLInputElement && searchButton instanceof HTMLInputElement) {
+		var searchTermInputElementValue = searchTermInputElement.value;
+
+		if(typeof searchTermInputElementValue === "string" && searchTermInputElementValue.length > 0) {
+			searchButton.removeAttribute("disabled");
+		} else {
+			searchButton.setAttribute("disabled", "disabled");
+		}
+	}
+}
+
 // Upon loading the page, check if an URL parameter was passed, and use it to perform a search
 window.onload = function () {
 	searchTermInputElement = document.getElementById("search-term");
+	searchButton = document.getElementById("searchButton");
 	contentDivElement = document.getElementById("content");
 	viewLinkElem = document.getElementById("viewlink");
 	editLinkElement = document.getElementById("editlink");
@@ -219,6 +236,15 @@ window.onload = function () {
 			search: queryParam
 		}, window.title, window.location.href);
 	}
+
+	searchTermInputElement.addEventListener("keyup", function () {
+		updateSearchButtonEnabledState();
+	});
+
+	searchTermInputElement.addEventListener("blur", function () {
+		updateSearchButtonEnabledState();
+	});
+
 };
 
 window.onpopstate = function () {
