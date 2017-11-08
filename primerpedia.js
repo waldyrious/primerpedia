@@ -34,7 +34,7 @@ var articleTitleElement = null;
 var licenseIconElement = null;
 var infoIconElement = null;
 var copyShareLinkInputElement = null;
-var copyModal = null;
+var copyInputContainer = null;
 
 function random() {
 	searchTermInputElement.value = "";
@@ -235,7 +235,7 @@ window.onload = function () {
 	licenseIconElement = document.getElementById("license-icon");
 	infoIconElement = document.getElementById("info-icon");
 	copyShareLinkInputElement = document.getElementById("copyShareLinkInput");
-	copyModal = document.getElementById("copyModal");
+	copyInputContainer = document.getElementById("copyInputContainer");
 
 	var queryParam = getQueryVariable("search");
 
@@ -262,7 +262,10 @@ window.onload = function () {
 	copyShareLinkElement.addEventListener("click", function () {
 		// this should allways be true, but doesn't hurt to check
 		if(copyShareLinkInputElement instanceof HTMLInputElement) {
-			toggleVisibility(copyModal, true);
+			// some browsers require a visible source for selection & copy to work
+			// this container virtually stays invisible
+			// since we hide it again as soon as we are done executing the copy instruction
+			toggleVisibility(copyInputContainer, true);
 
 			// clipboard interaction is a dodgy thing
 			// this should prevent the worst things where browser support
@@ -273,7 +276,7 @@ window.onload = function () {
 			} catch(e) {
 			}
 
-			toggleVisibility(copyModal, false);
+			toggleVisibility(copyInputContainer, false);
 		}
 	});
 };
