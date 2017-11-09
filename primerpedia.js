@@ -29,9 +29,12 @@ var searchButton = null;
 var contentDivElement = null;
 var viewLinkElem = null;
 var editLinkElement = null;
+var copyShareLinkElement = null;
 var articleTitleElement = null;
 var licenseIconElement = null;
 var infoIconElement = null;
+var copyShareLinkInputElement = null;
+var copyInputContainer = null;
 
 function random() {
 	searchTermInputElement.value = "";
@@ -96,17 +99,25 @@ function clearNode(node) {
 	return clone;
 }
 
+function getShareableLink(search) {
+	return window.location.pathname + "?search=" + search;
+}
+
 function renderSearchResult(jsonObject) {
 	var pageid = jsonObject.query.pageids[0];
 	var article = jsonObject.query.pages[pageid];
-	article.url = "https://en.wikipedia.org/wiki/" + encodeURIComponent(article.title);
+	var encodedArticleTitle = encodeURIComponent(article.title);
+	article.url = "https://en.wikipedia.org/wiki/" + encodedArticleTitle;
 	var editlink = article.url + "?action=edit&amp;section=0";
+	var shareLink = window.location.href;
 
 	viewLinkElem.textContent = article.title;
 	viewLinkElem.setAttribute("href", article.url);
 
 	editLinkElement.setAttribute("href", editlink);
 	toggleVisibility(articleTitleElement, true);
+
+	copyShareLinkInputElement.value = getShareableLink(encodedArticleTitle);
 
 	contentDivElement = clearNode(contentDivElement);
 	contentDivElement.innerHTML = article.extract;
@@ -160,7 +171,7 @@ function addToBrowserHistory(jsonObject) {
 		return;
 	}
 
-	history.pushState(historyState, window.title, window.location.pathname + "?search=" + search);
+	history.pushState(historyState, window.title, getShareableLink(search));
 }
 
 function handleRequestResult(jsonObject) {
@@ -219,9 +230,12 @@ window.onload = function () {
 	contentDivElement = document.getElementById("content");
 	viewLinkElem = document.getElementById("viewlink");
 	editLinkElement = document.getElementById("editlink");
+	copyShareLinkElement = document.getElementById("copysharelink");
 	articleTitleElement = document.getElementById("article-title");
 	licenseIconElement = document.getElementById("license-icon");
 	infoIconElement = document.getElementById("info-icon");
+	copyShareLinkInputElement = document.getElementById("copyShareLinkInput");
+	copyInputContainer = document.getElementById("copyInputContainer");
 
 	var queryParam = getQueryVariable("search");
 
@@ -245,6 +259,26 @@ window.onload = function () {
 		updateSearchButtonEnabledState();
 	});
 
+	copyShareLinkElement.addEventListener("click", function () {
+		// this should allways be true, but doesn't hurt to check
+		if(copyShareLinkInputElement instanceof HTMLInputElement) {
+			// some browsers require a visible source for selection & copy to work
+			// this container virtually stays invisible
+			// since we hide it again as soon as we are done executing the copy instruction
+			toggleVisibility(copyInputContainer, true);
+
+			// clipboard interaction is a dodgy thing
+			// this should prevent the worst things where browser support
+			// or permissions are missing
+			try {
+				copyShareLinkInputElement.select(); // select the contents of the input
+				document.execCommand("copy"); // copy the selection into the clipboard
+			} catch(e) {
+			}
+
+			toggleVisibility(copyInputContainer, false);
+		}
+	});
 };
 
 window.onpopstate = function () {
