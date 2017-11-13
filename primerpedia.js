@@ -193,8 +193,13 @@ function handleRequestResult(jsonObject) {
 	renderNotFoundNode();
 }
 
-// Get query string from URL parameter
-// https://stackoverflow.com/a/2091331/266309
+/**
+ * Get query string from URL parameter
+ *
+ * @see [origin on stackoverflow]{@link https://stackoverflow.com/a/2091331/266309}
+ * @param {string} parameter - Name of the query parameter to retrieve
+ * @returns {string|null} - Decoded query parameter or null
+ */
 function getQueryVariable(parameter) {
 	// Get query string, excluding the first character, '?'
 	var query = window.location.search.substring(1);
