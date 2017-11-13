@@ -23,7 +23,11 @@ var apiUrl = "https://en.wikipedia.org/w/api.php?";
 var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
 var requestTimeoutInMs = 3000;
 var requestCallbackName = "requestCallback";
+var notificationTimeoutInMs = 3000;
+var notificationTimeout = null;
 
+var notificationElement = null;
+var notificationContentElement = null;
 var searchTermInputElement = null;
 var searchButton = null;
 var contentDivElement = null;
@@ -230,6 +234,8 @@ function updateSearchButtonEnabledState() {
 
 // Upon loading the page, check if an URL parameter was passed, and use it to perform a search
 window.onload = function () {
+    notificationElement = document.getElementById("notification");
+    notificationContentElement = document.getElementById("notification-content");
     searchTermInputElement = document.getElementById("search-term");
     searchButton = document.getElementById("searchButton");
     contentDivElement = document.getElementById("content");
@@ -278,11 +284,21 @@ window.onload = function () {
             try {
                 copyShareLinkInputElement.select(); // select the contents of the input
                 document.execCommand("copy"); // copy the selection into the clipboard
+
+                toggleVisibility(notificationElement, true); // show notification to user
+                // hide notification after an agreeable time
+                setTimeout(function () {
+                    toggleVisibility(notificationElement, false); //
+                }, notificationTimeoutInMs);
             } catch(e) {
             }
 
             toggleVisibility(copyInputContainer, false);
         }
+    });
+
+    notificationContentElement.addEventListener("click", function () {
+        toggleVisibility(notificationElement, false);
     });
 };
 
