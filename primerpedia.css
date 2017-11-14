@@ -11,6 +11,23 @@ body, h2, .error {
     text-align: center;
 }
 
+#notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.5em 1em;
+    box-sizing: border-box;
+}
+
+#notification.information {
+    background-color: LightGreen;
+}
+
+#notification-content {
+    color: initial;
+}
+
 #controls, #content, #article-title {
     margin: 0.5em auto;
     width: 80%;
