@@ -52,6 +52,12 @@ var infoIconElement = null;
 var copyShareLinkInputElement = null;
 var copyInputContainer = null;
 
+/**
+ * Used to trigger search for a random topic
+ */
+// Disable eslint's no-unused-vars warning for the next line.
+// Needed because this function is currently only called via HTML
+// eslint-disable-next-line no-unused-vars
 function random() {
     searchTermInputElement.value = "";
     apiRequest(apiExtractsQuery + randomArticleQuery);
