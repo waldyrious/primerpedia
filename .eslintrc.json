@@ -1,0 +1,24 @@
+{
+	"env": {
+		"browser": true
+	},
+	"parserOptions": {
+		"ecmaFeatures": {},
+		"ecmaVersion": 5
+	},
+	"rules": {
+		"no-undef": "warn",
+		"no-unreachable": "warn",
+		"no-unused-vars": "warn",
+		"quotes": [
+			"warn",
+			"double"
+		],
+		"no-trailing-spaces": "warn",
+		"eol-last": "warn",
+		"indent": [
+			"warn",
+			4
+		]
+	}
+}
