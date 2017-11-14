@@ -21,6 +21,9 @@
  *    and some templates are still displayed, so they need to be hidden via css.
  */
 
+// Declare eslint globals (needed because we're using separated files)
+/* global clearNode, toggleVisibility, getQueryVariable */
+
 var wikipediaUrl = "https://en.wikipedia.org";
 var requestTimeoutInMs = 3000;
 var requestCallbackName = "requestCallback";
