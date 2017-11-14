@@ -2,6 +2,11 @@
  * @file Primerpedia Utility Functions
  */
 
+// This file only provides static global functions,
+// which are called from primerperia.js; so we tell eslint
+// to ignore the "no unused variables" check for this entire file:
+/* eslint-disable no-unused-vars */
+
 /**
  * Remove any Child Nodes from an Element
  * @param {HTMLElement} node - any DOM Node
