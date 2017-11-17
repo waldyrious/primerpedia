@@ -104,7 +104,7 @@ function clearNode(node) {
 }
 
 function getShareableLink(search) {
-	return window.location.pathname + "?search=" + search;
+    return window.location.pathname + "?search=" + search;
 }
 
 function renderSearchResult(jsonObject) {
@@ -221,15 +221,15 @@ function getQueryVariable(parameter) {
 }
 
 function updateSearchButtonEnabledState() {
-	if(searchTermInputElement instanceof HTMLInputElement && searchButton instanceof HTMLInputElement) {
-		var searchTermInputElementValue = searchTermInputElement.value;
+    if(searchTermInputElement instanceof HTMLInputElement && searchButton instanceof HTMLInputElement) {
+        var searchTermInputElementValue = searchTermInputElement.value;
 
-		if(typeof searchTermInputElementValue === "string" && searchTermInputElementValue.length > 0) {
-			searchButton.removeAttribute("disabled");
-		} else {
-			searchButton.setAttribute("disabled", "disabled");
-		}
-	}
+        if(typeof searchTermInputElementValue === "string" && searchTermInputElementValue.length > 0) {
+            searchButton.removeAttribute("disabled");
+        } else {
+            searchButton.setAttribute("disabled", "disabled");
+        }
+    }
 }
 
 // Upon loading the page, check if an URL parameter was passed, and use it to perform a search
