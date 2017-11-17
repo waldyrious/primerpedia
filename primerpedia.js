@@ -32,7 +32,7 @@ var notificationTimeout = null;
 
 var apiUrl = wikipediaUrl + "/w/api.php";
 
-var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
+var articleIntroQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
 var editIntroQuery = "?action=edit&amp;section=0";
 
 var searchQuery = "&generator=search&gsrlimit=1&gsrsearch=";
@@ -60,7 +60,7 @@ var copyInputContainer = null;
 // eslint-disable-next-line no-unused-vars
 function random() {
     searchTermInputElement.value = "";
-    apiRequest(apiExtractsQuery + randomArticleQuery);
+    apiRequest(articleIntroQuery + randomArticleQuery);
 }
 
 function search() {
@@ -69,7 +69,7 @@ function search() {
     var searchTerm = searchTermInputElement.value;
 
     if(typeof searchTerm === "string" && searchTerm.length > 0) {
-        apiRequest(apiExtractsQuery + searchQuery + searchTerm.replace(/ /g, "_"));
+        apiRequest(articleIntroQuery + searchQuery + searchTerm.replace(/ /g, "_"));
     }
 }
 
@@ -202,7 +202,7 @@ function handleRequestResult(jsonObject) {
 
             return;
         } else if(typeof searchData.suggestion !== "undefined") {
-            apiRequest(apiExtractsQuery + searchQuery + searchData.suggestion);
+            apiRequest(articleIntroQuery + searchQuery + searchData.suggestion);
 
             return;
         }
