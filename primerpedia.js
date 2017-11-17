@@ -51,7 +51,7 @@ function search() {
     var searchTerm = searchTermInputElement.value;
 
     if(typeof searchTerm === "string" && searchTerm.length > 0) {
-        apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm.replace(/ /g, '_'));
+        apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm.replace(/ /g, "_"));
     }
 }
 
@@ -110,7 +110,7 @@ function getShareableLink(search) {
 function renderSearchResult(jsonObject) {
     var pageid = jsonObject.query.pageids[0];
     var article = jsonObject.query.pages[pageid];
-    var encodedArticleTitle = encodeURIComponent(article.title).replace(/%20/g, '_');
+    var encodedArticleTitle = encodeURIComponent(article.title).replace(/%20/g, "_");
     article.url = "https://en.wikipedia.org/wiki/" + encodedArticleTitle;
     var editlink = article.url + "?action=edit&amp;section=0";
     var shareLink = window.location.href;
@@ -164,7 +164,7 @@ function addToBrowserHistory(jsonObject) {
     // pretty WET, probably best to make a DTO from the request
     var pageid = jsonObject.query.pageids[0];
     var article = jsonObject.query.pages[pageid];
-    var search = encodeURIComponent(article.title).replace(/%20/g, '_');
+    var search = encodeURIComponent(article.title).replace(/%20/g, "_");
 
     var historyState = {
         search: search
@@ -205,9 +205,9 @@ function handleRequestResult(jsonObject) {
  * @returns {string|null} - Decoded query parameter or null
  */
 function getQueryVariable(parameter) {
-    // Get query string, excluding the first character, '?'
+    // Get query string, excluding the first character, "?"
     var query = window.location.search.substring(1);
-    // Split each parameter=value pair using '&' as separator
+    // Split each parameter=value pair using "&" as separator
     var vars = query.split("&");
     // Loop over all the parameter=value pairs, and split them into their parameter/value components
     for(var i = 0; i < vars.length; i++) {
@@ -251,7 +251,7 @@ window.onload = function () {
     var queryParam = getQueryVariable("search");
 
     if(queryParam !== null) {
-        searchTermInputElement.value = queryParam.replace(/_/g, ' ');
+        searchTermInputElement.value = queryParam.replace(/_/g, " ");
         search();
     }
 
