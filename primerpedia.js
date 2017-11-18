@@ -1,4 +1,7 @@
-/* There are 3 ways (that I know about) of getting the first section of an article.
+/**
+ * @file Primerpedia Script Entry Point
+ *
+ * There are 3 ways (that I know about) of getting the first section of an article.
  * 1) We can use action=parse coupled with the section=0 parameter,
  *    but the "page" parameter needs to be supplied,
  *    which means that we'd have to make two API requests
@@ -18,13 +21,22 @@
  *    and some templates are still displayed, so they need to be hidden via css.
  */
 
-var apiUrl = "https://en.wikipedia.org/w/api.php?";
-// https://www.mediawiki.org/wiki/Extension:MobileFrontend#prop.3Dextracts
-var apiExtractsQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
+// Declare eslint globals (needed because we're using separated files)
+/* global clearNode, toggleVisibility, getQueryVariable */
+
+var wikipediaUrl = "https://en.wikipedia.org";
 var requestTimeoutInMs = 3000;
 var requestCallbackName = "requestCallback";
 var notificationTimeoutInMs = 3000;
 var notificationTimeout = null;
+
+var apiUrl = wikipediaUrl + "/w/api.php";
+
+var articleIntroQuery = "action=query&prop=extracts&exintro&indexpageids=true&format=json";
+var editIntroQuery = "?action=edit&amp;section=0";
+
+var searchQuery = "&generator=search&gsrlimit=1&gsrsearch=";
+var randomArticleQuery = "&generator=random&grnnamespace=0";
 
 var notificationElement = null;
 var notificationContentElement = null;
@@ -40,9 +52,15 @@ var infoIconElement = null;
 var copyShareLinkInputElement = null;
 var copyInputContainer = null;
 
+/**
+ * Used to trigger search for a random topic
+ */
+// Disable eslint's no-unused-vars warning for the next line.
+// Needed because this function is currently only called via HTML
+// eslint-disable-next-line no-unused-vars
 function random() {
     searchTermInputElement.value = "";
-    apiRequest(apiExtractsQuery + "&generator=random&grnnamespace=0");
+    apiRequest(articleIntroQuery + randomArticleQuery);
 }
 
 function search() {
@@ -51,18 +69,31 @@ function search() {
     var searchTerm = searchTermInputElement.value;
 
     if(typeof searchTerm === "string" && searchTerm.length > 0) {
-        apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchTerm.replace(/ /g, "_"));
+        apiRequest(articleIntroQuery + searchQuery + searchTerm.replace(/ /g, "_"));
     }
 }
 
-function apiRequest(queryString) {
+function renderLoadingSpinner() {
     // Show animated loading spinner -- from https://commons.wikimedia.org/wiki/File:Chromiumthrobber.svg
     contentDivElement.innerHTML = "<img src='img/loading.svg' alt='Loading...' id='loading-spinner'/>";
+}
+
+/**
+ * Execute a JSONP Request
+ * @param {string} queryString
+ */
+function apiRequest(queryString) {
+
+    if(typeof queryString !== "string" || queryString.length <= 0) {
+        throw new Error("apiRequest requires a non-empty string parameter.");
+    }
+
+    renderLoadingSpinner();
 
     var script = document.createElement("script");
     script.type = "text/javascript";
     script.async = true;
-    script.src = apiUrl + queryString + "&callback=" + requestCallbackName;
+    script.src = apiUrl + "?" + queryString + "&callback=" + requestCallbackName;
 
     document.getElementsByTagName("head")[0].appendChild(script);
 
@@ -86,23 +117,6 @@ function apiRequest(queryString) {
     }
 }
 
-function toggleVisibility(element, visibility) {
-    if(element instanceof HTMLElement) {
-        if(!visibility) {
-            element.style.setProperty("display", "none");
-        } else {
-            element.style.removeProperty("display");
-        }
-    }
-}
-
-function clearNode(node) {
-    var clone = node.cloneNode(false);
-    node.parentNode.replaceChild(clone, node);
-
-    return clone;
-}
-
 function getShareableLink(search) {
     return window.location.pathname + "?search=" + search;
 }
@@ -111,8 +125,8 @@ function renderSearchResult(jsonObject) {
     var pageid = jsonObject.query.pageids[0];
     var article = jsonObject.query.pages[pageid];
     var encodedArticleTitle = encodeURIComponent(article.title).replace(/%20/g, "_");
-    article.url = "https://en.wikipedia.org/wiki/" + encodedArticleTitle;
-    var editlink = article.url + "?action=edit&amp;section=0";
+    article.url = wikipediaUrl + "/wiki/" + encodedArticleTitle;
+    var editlink = article.url + editIntroQuery;
     var shareLink = window.location.href;
 
     viewLinkElem.textContent = article.title;
@@ -188,36 +202,13 @@ function handleRequestResult(jsonObject) {
 
             return;
         } else if(typeof searchData.suggestion !== "undefined") {
-            apiRequest(apiExtractsQuery + "&generator=search&gsrlimit=1&gsrsearch=" + searchData.suggestion);
+            apiRequest(articleIntroQuery + searchQuery + searchData.suggestion);
 
             return;
         }
     }
 
     renderNotFoundNode();
-}
-
-/**
- * Get query string from URL parameter
- *
- * @see [origin on stackoverflow]{@link https://stackoverflow.com/a/2091331/266309}
- * @param {string} parameter - Name of the query parameter to retrieve
- * @returns {string|null} - Decoded query parameter or null
- */
-function getQueryVariable(parameter) {
-    // Get query string, excluding the first character, "?"
-    var query = window.location.search.substring(1);
-    // Split each parameter=value pair using "&" as separator
-    var vars = query.split("&");
-    // Loop over all the parameter=value pairs, and split them into their parameter/value components
-    for(var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split("=");
-        // If one of the parameter names is the one we're looking for, return its value
-        if(decodeURIComponent(pair[0]) == parameter) {
-            return decodeURIComponent(pair[1]);
-        }
-    }
-    return null;
 }
 
 function updateSearchButtonEnabledState() {
