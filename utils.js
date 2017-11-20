@@ -3,7 +3,7 @@
  */
 
 // This file only provides static global functions,
-// which are called from primerperia.js; so we tell eslint
+// which are called from primerpedia.js; so we tell eslint
 // to ignore the "no unused variables" check for this entire file:
 /* eslint-disable no-unused-vars */
 
