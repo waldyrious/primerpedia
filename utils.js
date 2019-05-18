@@ -55,3 +55,7 @@ function getQueryVariable(parameter) {
     }
     return null;
 }
+
+function prefixUrl(language) {
+    return "https://" + language + ".";
+}

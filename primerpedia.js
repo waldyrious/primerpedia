@@ -24,7 +24,7 @@
 // Declare eslint globals (needed because we're using separated files)
 /* global clearNode, toggleVisibility, getQueryVariable */
 
-var wikipediaUrl = "https://en.wikipedia.org";
+var wikipediaUrl = "wikipedia.org";
 var requestTimeoutInMs = 3000;
 var requestCallbackName = "requestCallback";
 var notificationTimeoutInMs = 3000;
@@ -41,6 +41,7 @@ var randomArticleQuery = "&generator=random&grnnamespace=0";
 var notificationElement = null;
 var notificationContentElement = null;
 var searchTermInputElement = null;
+var languageInputElement = null;
 var searchButton = null;
 var contentDivElement = null;
 var viewLinkElem = null;
@@ -60,16 +61,18 @@ var copyInputContainer = null;
 // eslint-disable-next-line no-unused-vars
 function random() {
     searchTermInputElement.value = "";
-    apiRequest(articleIntroQuery + randomArticleQuery);
+    var language = languageInputElement.value;
+    apiRequest(language, articleIntroQuery + randomArticleQuery);
 }
 
 function search() {
     updateSearchButtonEnabledState();
 
     var searchTerm = searchTermInputElement.value;
+    var language = languageInputElement.value;
 
     if(typeof searchTerm === "string" && searchTerm.length > 0) {
-        apiRequest(articleIntroQuery + searchQuery + searchTerm.replace(/ /g, "_"));
+        apiRequest(language, articleIntroQuery + searchQuery + searchTerm.replace(/ /g, "_"));
     }
 }
 
@@ -82,7 +85,7 @@ function renderLoadingSpinner() {
  * Execute a JSONP Request
  * @param {string} queryString
  */
-function apiRequest(queryString) {
+function apiRequest(language, queryString) {
 
     if(typeof queryString !== "string" || queryString.length <= 0) {
         throw new Error("apiRequest requires a non-empty string parameter.");
@@ -93,7 +96,7 @@ function apiRequest(queryString) {
     var script = document.createElement("script");
     script.type = "text/javascript";
     script.async = true;
-    script.src = apiUrl + "?" + queryString + "&callback=" + requestCallbackName;
+    script.src = prefixUrl(language) + apiUrl + "?" + queryString + "&callback=" + requestCallbackName;
 
     document.getElementsByTagName("head")[0].appendChild(script);
 
@@ -117,15 +120,15 @@ function apiRequest(queryString) {
     }
 }
 
-function getShareableLink(search) {
-    return window.location.pathname + "?search=" + search;
+function getShareableLink(search, language) {
+    return window.location.pathname + "?search=" + search + "&language=" + language;
 }
 
 function renderSearchResult(jsonObject) {
     var pageid = jsonObject.query.pageids[0];
     var article = jsonObject.query.pages[pageid];
     var encodedArticleTitle = encodeURIComponent(article.title).replace(/%20/g, "_");
-    article.url = wikipediaUrl + "/wiki/" + encodedArticleTitle;
+    article.url = prefixUrl(languageInputElement.value) + wikipediaUrl + "/wiki/" + encodedArticleTitle;
     var editlink = article.url + editIntroQuery;
     var shareLink = window.location.href;
 
@@ -135,7 +138,7 @@ function renderSearchResult(jsonObject) {
     editLinkElement.setAttribute("href", editlink);
     toggleVisibility(articleTitleElement, true);
 
-    copyShareLinkInputElement.value = getShareableLink(encodedArticleTitle);
+    copyShareLinkInputElement.value = getShareableLink(encodedArticleTitle, language.value);
 
     contentDivElement = clearNode(contentDivElement);
     contentDivElement.innerHTML = article.extract;
@@ -179,6 +182,7 @@ function addToBrowserHistory(jsonObject) {
     var pageid = jsonObject.query.pageids[0];
     var article = jsonObject.query.pages[pageid];
     var search = encodeURIComponent(article.title).replace(/%20/g, "_");
+    var language = languageInputElement.value;
 
     var historyState = {
         search: search
@@ -189,7 +193,7 @@ function addToBrowserHistory(jsonObject) {
         return;
     }
 
-    history.pushState(historyState, window.title, getShareableLink(search));
+    history.pushState(historyState, window.title, getShareableLink(search, language));
 }
 
 function handleRequestResult(jsonObject) {
@@ -228,6 +232,7 @@ window.onload = function () {
     notificationElement = document.getElementById("notification");
     notificationContentElement = document.getElementById("notification-content");
     searchTermInputElement = document.getElementById("search-term");
+    languageInputElement = document.getElementById("language");
     searchButton = document.getElementById("searchButton");
     contentDivElement = document.getElementById("content");
     viewLinkElem = document.getElementById("viewlink");
