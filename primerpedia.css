@@ -5,6 +5,7 @@ html {
 body {
     min-width: 280px;
     line-height: 1.5;
+    font-family: sans-serif;
 }
 
 body, h2, .error {
@@ -36,7 +37,6 @@ body, h2, .error {
 
 #content {
     text-align: left;
-    font-family: sans-serif;
 }
 
 h1 > a, h1 > a:visited {
@@ -57,8 +57,14 @@ h2 {
 
 form input {
     margin: 1%;
-    height: 2em;
+    padding: .3em .5em;
+    border: 1px solid silver;
+    border-radius: .3em;
     box-sizing: padding-box; /* harmonize box model of text input and buttons */
+}
+
+#language {
+    width: 4em;
 }
 
 #loading-spinner {
@@ -122,7 +128,7 @@ div.actionlink-container {
     float: right;
 }
 
-input[type=search], input[type=submit], input[type=button] {
+input[type=search], input[type=submit], input[type=button], input[type=text] {
     font-size: inherit;
 }
 

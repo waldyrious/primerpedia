@@ -21,7 +21,20 @@
     </h1>
     <div id="controls">
         <form onsubmit="search(); return false;">
-            <input type="search" autocomplete="off" id="search-term" placeholder="Search..." autofocus="" />
+            <input type="text" id="language" list="languages" placeholder="en" pattern="en|sv|de|fr|nl|ru|it|es|pl|pt" title="Language code"/>
+            <datalist id="languages">
+                <option value="de">
+                <option value="en">
+                <option value="es">
+                <option value="fr">
+                <option value="it">
+                <option value="nl">
+                <option value="pl">
+                <option value="pt">
+                <option value="ru">
+                <option value="sv">
+            </datalist>
+            <input type="search" autocomplete="off" id="search-term" placeholder="Search term..." autofocus="" />
             <input id="searchButton" type="submit" value="Search" disabled="disabled"/>
             <input type="button" value="Load random" onclick="random();" />
         </form>
