@@ -1,7 +1,7 @@
-## The [ISC License](http://opensource.org/licenses/ISC)
+## ISC License
 
-Copyright (c) 2012-2017 Waldir Pimenta
-and [contributors](https://github.com/waldyrious/primerpedia/graphs/contributors)
+> Copyright (c) 2012-2019 Waldir Pimenta
+> and [contributors](https://github.com/waldyrious/primerpedia/graphs/contributors)
 
 Permission to use, copy, modify, and/or distribute this software for any purpose
 with or without fee is hereby granted, provided that the above copyright notice
