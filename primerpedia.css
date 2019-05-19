@@ -5,6 +5,7 @@ html {
 body {
     min-width: 280px;
     line-height: 1.5;
+    font-family: sans-serif;
 }
 
 body, h2, .error {
@@ -36,7 +37,6 @@ body, h2, .error {
 
 #content {
     text-align: left;
-    font-family: sans-serif;
 }
 
 h1 > a, h1 > a:visited {

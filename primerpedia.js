@@ -61,7 +61,7 @@ var copyInputContainer = null;
 // eslint-disable-next-line no-unused-vars
 function random() {
     searchTermInputElement.value = "";
-    var language = languageInputElement.value;
+    var language = getLanguageCode();
     apiRequest(language, articleIntroQuery + randomArticleQuery);
 }
 
@@ -69,7 +69,7 @@ function search() {
     updateSearchButtonEnabledState();
 
     var searchTerm = searchTermInputElement.value;
-    var language = languageInputElement.value;
+    var language = getLanguageCode();
 
     if(typeof searchTerm === "string" && searchTerm.length > 0) {
         apiRequest(language, articleIntroQuery + searchQuery + searchTerm.replace(/ /g, "_"));
@@ -124,11 +124,15 @@ function getShareableLink(search, language) {
     return window.location.pathname + "?search=" + search + "&language=" + language;
 }
 
+function getLanguageCode() {
+    return languageInputElement.value || 'en';
+}
+
 function renderSearchResult(jsonObject) {
     var pageid = jsonObject.query.pageids[0];
     var article = jsonObject.query.pages[pageid];
     var encodedArticleTitle = encodeURIComponent(article.title).replace(/%20/g, "_");
-    article.url = prefixUrl(languageInputElement.value) + wikipediaUrl + "/wiki/" + encodedArticleTitle;
+    article.url = prefixUrl(getLanguageCode()) + wikipediaUrl + "/wiki/" + encodedArticleTitle;
     var editlink = article.url + editIntroQuery;
     var shareLink = window.location.href;
 
@@ -182,7 +186,7 @@ function addToBrowserHistory(jsonObject) {
     var pageid = jsonObject.query.pageids[0];
     var article = jsonObject.query.pages[pageid];
     var search = encodeURIComponent(article.title).replace(/%20/g, "_");
-    var language = languageInputElement.value;
+    var language = getLanguageCode();
 
     var historyState = {
         search: search
