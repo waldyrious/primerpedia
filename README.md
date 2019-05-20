@@ -16,8 +16,8 @@ for when you just need a quick overview at the topic.
 
 Try the live demo here: **https://tools.wmflabs.org/primerpedia**
 
-<sup>(if that link is down, try [this one](https://tools-static.wmflabs.org/primerpedia)
-or [this one](http://waldyrious.github.io/primerpedia))</sup>
+<sup>(If that link is down, try [this one](https://tools-static.wmflabs.org/primerpedia)
+or [this one](http://waldyrious.github.io/primerpedia).)</sup>
 
 To achieve this, it uses the MediaWiki API to fetch the first section of an article,
 and cleans it up for presentation, removing extra details and editing-related templates
@@ -26,4 +26,4 @@ and cleans it up for presentation, removing extra details and editing-related te
 
 This tool should also help identify issues with the lead sections of Wikipedia articles,
 which, according to the [Manual of Style](https://en.wikipedia.org/wiki/MOS:LEAD),
-"should define the topic and summarize the body of the article with appropriate weight."
+_"should define the topic and summarize the body of the article with appropriate weight."_
