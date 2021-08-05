@@ -14,7 +14,7 @@ Primerpedia is a proof-of-concept demo for the
 It provides short summaries of Wikipedia articles,
 for when you just need a quick overview at the topic.
 
-Try the live demo here: **https://tools.wmflabs.org/primerpedia**
+Try the live demo here: **https://primerpedia.toolforge.org**
 
 <sup>(If that link is down, try [this one](https://tools-static.wmflabs.org/primerpedia)
 or [this one](http://waldyrious.github.io/primerpedia).)</sup>
